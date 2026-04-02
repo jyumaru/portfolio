@@ -41,6 +41,7 @@
     width: 7px; height: 7px; border-radius: 50%;
     background: var(--dark);
     position: absolute; transform: translate(-50%,-50%);
+    transition: background .3s;
   }
   #cursor .ring {
     width: 34px; height: 34px; border-radius: 50%;
@@ -50,6 +51,10 @@
   }
   body.hovering #cursor .ring { width: 54px; height: 54px; border-color: var(--gold); }
   body.hovering #cursor .dot  { background: var(--gold); }
+  body.cursor-invert #cursor .dot  { background: #faf9f6; }
+  body.cursor-invert #cursor .ring { border-color: rgba(250,249,246,0.5); }
+  body.cursor-invert.hovering #cursor .dot  { background: var(--gold2); }
+  body.cursor-invert.hovering #cursor .ring { border-color: var(--gold2); }
 
   /* ── Nav ── */
   nav {
@@ -704,6 +709,10 @@
   document.addEventListener('mousemove',e=>{
     mx=e.clientX; my=e.clientY;
     dot.style.left=mx+'px'; dot.style.top=my+'px';
+    // ダーク領域判定
+    const el = document.elementFromPoint(mx, my);
+    const dark = el && el.closest('#contact, footer');
+    document.body.classList.toggle('cursor-invert', !!dark);
   });
   (function loop(){
     rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
