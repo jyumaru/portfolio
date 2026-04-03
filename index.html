@@ -336,12 +336,28 @@
 
   .work-overlay {
     position: absolute; inset: 0; z-index: 2;
-    background: rgba(250,249,246,0.9);
+    background: rgba(250,249,246,0.95);
     display: flex; flex-direction: column;
-    justify-content: flex-end; padding: 40px;
+    justify-content: center; padding: 28px 32px;
     opacity: 0; transition: opacity .4s;
+    overflow-y: auto;
   }
   .work-card:hover .work-overlay { opacity: 1; }
+  .work-overlay-title {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .work-overlay-links { display: flex; flex-direction: column; gap: 8px; }
+  .work-overlay-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(13px, 1.2vw, 16px); color: var(--dark);
+    text-decoration: none; padding: 8px 12px;
+    border: 1px solid var(--border); background: var(--bg);
+    display: flex; justify-content: space-between; align-items: center;
+    transition: border-color .2s, background .2s;
+    line-height: 1.3;
+  }
+  .work-overlay-link:hover { border-color: var(--gold); background: var(--bg2); color: var(--gold); }
   .work-category { font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
   .work-title-ov { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--dark); }
 
@@ -623,6 +639,16 @@
       <div class="work-thumb">
         <img src="yt-image.png" alt="YouTube台本制作">
       </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">YouTube台本</div>
+        <div class="work-overlay-links">
+          <a href="https://docs.google.com/document/d/1EZetIvRZG2wCDbs30h9EyiOMD3HWOnDmFBgYQSiIC0c/edit" target="_blank" class="work-overlay-link">北関東連続幼女誘拐殺人事件 <span>↗</span></a>
+          <a href="https://docs.google.com/document/d/1afqhvqxMnLxsMdEZLmbp3r2liZdeUV9lP0bvdpAEPyA/edit" target="_blank" class="work-overlay-link">脱獄王・白鳥由栄 <span>↗</span></a>
+          <a href="https://docs.google.com/document/d/1xW95c_YEYoOK1rxV8Vo-Tp9D4dMjGcziajrzwEjixzw/edit" target="_blank" class="work-overlay-link">国松警察庁長官狙撃事件 <span>↗</span></a>
+          <a href="https://www.youtube.com/watch?v=MhmKwppqImI" target="_blank" class="work-overlay-link">お化け屋敷（ショート） <span>↗</span></a>
+          <a href="https://www.youtube.com/watch?v=OXi3pa_0Edc" target="_blank" class="work-overlay-link">タイムカプセル（ショート） <span>↗</span></a>
+        </div>
+      </div>
       <div class="work-info-bar">
         <div><div class="work-info-cat">ライティング</div><div class="work-info-title">YouTube台本制作</div></div>
         <div class="work-arrow">→</div>
@@ -640,6 +666,16 @@
     <div class="work-card reveal reveal-delay-1">
       <div class="work-thumb">
         <img src="kindle-image.png" alt="Kindle出版">
+      </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">Kindle出版</div>
+        <div class="work-overlay-links">
+          <a href="https://amzn.asia/d/04jozKLG" target="_blank" class="work-overlay-link">成約率を３倍にするヒアリングテンプレート <span>↗</span></a>
+          <a href="https://amzn.asia/d/0iunBxaR" target="_blank" class="work-overlay-link">50代からの筋トレ革命 <span>↗</span></a>
+          <a href="https://amzn.asia/d/0eMhLyI3" target="_blank" class="work-overlay-link">５０代からの健康投資術 <span>↗</span></a>
+          <a href="https://amzn.asia/d/0blbGaeX" target="_blank" class="work-overlay-link">推し活ミニマリスト <span>↗</span></a>
+          <a href="https://amzn.asia/d/06oROTfI" target="_blank" class="work-overlay-link">週休３日ニート <span>↗</span></a>
+        </div>
       </div>
       <div class="work-info-bar">
         <div><div class="work-info-cat">ライティング</div><div class="work-info-title">Kindle出版</div></div>
