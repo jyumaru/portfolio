@@ -495,6 +495,23 @@
     .about-grid{grid-template-columns:4fr 6fr}
   }
 </style>
+<script>
+  // 旧バージョンが残した Service Worker / キャッシュを掃除する（古い表示の固着対策）
+  (function(){
+    try {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations()
+          .then(function(rs){ rs.forEach(function(r){ r.unregister(); }); })
+          .catch(function(){});
+      }
+      if (window.caches && caches.keys) {
+        caches.keys()
+          .then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); })
+          .catch(function(){});
+      }
+    } catch(e){}
+  })();
+</script>
 </head>
 <body>
 
