@@ -364,9 +364,13 @@
 
   .work-info-bar {
     position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-    padding: 18px 30px;
+    padding: 52px 30px 18px;
     display: flex; justify-content: space-between; align-items: flex-end;
-    background: linear-gradient(to top, rgba(250,249,246,.95) 0%, transparent 100%);
+    background: linear-gradient(to top,
+      rgba(250,249,246,0.98) 0%,
+      rgba(250,249,246,0.96) 42%,
+      rgba(250,249,246,0.80) 68%,
+      rgba(250,249,246,0) 100%);
   }
   .work-info-cat { font-size: clamp(9px, 0.8vw, 11px); letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
   .work-info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 1.4vw, 22px); font-weight: 300; color: var(--dark); }
