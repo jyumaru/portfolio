@@ -7,7 +7,7 @@
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:      #faf9f6;
@@ -383,6 +383,53 @@
   }
   .work-card:hover .work-arrow { border-color: var(--dark); background: var(--dark); color: #fff; }
 
+  /* ── Editorial（タイポ）カード ── */
+  .work-ed {
+    background: var(--bg2);
+    background-image:
+      linear-gradient(rgba(22,20,15,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22,20,15,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(28px, 3.6vw, 52px);
+    transition: background-color .4s;
+  }
+  .work-ed:hover { background-color: var(--bg3); }
+  .work-ed-circles {
+    position: absolute; right: -10%; top: 50%; transform: translateY(-50%);
+    width: 60%; aspect-ratio: 1; border-radius: 50%;
+    border: 1px solid rgba(160,120,58,0.34); z-index: 0; pointer-events: none;
+    transition: transform .7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .work-ed-circles::after {
+    content: ''; position: absolute; inset: 9%;
+    border: 1px solid rgba(160,120,58,0.22); border-radius: 50%;
+  }
+  .work-card:hover .work-ed-circles { transform: translateY(-50%) scale(1.06); }
+  .work-ed-inner { position: relative; z-index: 2; padding-left: clamp(18px, 1.8vw, 28px); }
+  .work-ed-head { position: relative; }
+  .work-ed-head::before {
+    content: ''; position: absolute; left: calc(-1 * clamp(18px, 1.8vw, 28px)); top: 3px; bottom: 5px;
+    width: 3px; background: var(--gold);
+  }
+  .work-ed-eyebrow {
+    font-size: clamp(10px, 0.9vw, 12px); font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark);
+    margin-bottom: clamp(16px, 1.8vw, 24px);
+  }
+  .work-ed-title {
+    font-weight: 700; line-height: 1.05; letter-spacing: 0.01em;
+    font-size: clamp(32px, 4.2vw, 58px); color: var(--dark);
+    margin-bottom: clamp(16px, 1.8vw, 24px);
+  }
+  .work-ed-title span { display: block; }
+  .work-ed-title .gold { color: var(--gold); }
+  .work-ed-sub {
+    font-size: clamp(13px, 1.25vw, 18px); letter-spacing: 0.04em;
+    color: var(--dark2); margin-bottom: clamp(10px, 1vw, 14px); font-weight: 400;
+  }
+  .work-ed-desc { font-size: clamp(11px, 1vw, 13px); line-height: 1.7; color: var(--muted); }
+
   /* ── Links ── */
   #links { background: var(--bg2); }
   .links-grid {
@@ -670,18 +717,26 @@
         <div class="work-arrow">→</div>
       </div>
     </a>
-    <a href="https://note.com/jyumarucom" target="_blank" class="work-card reveal reveal-delay-1" data-cat="writing" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="note-image.png" alt="note クリエイターページ">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">ライフスタイル</div><div class="work-info-title">祠堂じゅまる — note連載</div></div>
-        <div class="work-arrow">→</div>
+    <a href="https://note.com/jyumarucom" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="writing" style="text-decoration:none;">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Lifestyle / Note</div>
+          <div class="work-ed-title"><span>祠堂</span><span class="gold">じゅまる</span></div>
+        </div>
+        <div class="work-ed-sub">note Creator / Lifestyle Blog</div>
+        <div class="work-ed-desc">ゆるっとミニマリストで<br>シンプルに生きていく</div>
       </div>
     </a>
-    <div class="work-card reveal reveal-delay-2" data-cat="publish">
-      <div class="work-thumb">
-        <img src="kindle-image.png" alt="鏑木一茶 Kindle出版">
+    <div class="work-card work-ed reveal reveal-delay-2" data-cat="publish">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Publishing / Kindle</div>
+          <div class="work-ed-title"><span>Kindle</span><span class="gold">出版</span></div>
+        </div>
+        <div class="work-ed-sub">鏑木一茶 — Author</div>
+        <div class="work-ed-desc">筋トレ・哲学・朝活をテーマに<br>11冊を出版</div>
       </div>
       <div class="work-overlay">
         <div class="work-overlay-title">Kindle出版 — 鏑木一茶</div>
@@ -698,18 +753,26 @@
         <div class="work-arrow">→</div>
       </div>
     </div>
-    <a href="https://room.rakuten.co.jp/room_4519f16ec6/items" target="_blank" class="work-card reveal" data-cat="publish" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="rakuten-image.png" alt="楽天ROOM">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">自動化</div><div class="work-info-title">楽天ROOM</div></div>
-        <div class="work-arrow">→</div>
+    <a href="https://room.rakuten.co.jp/room_4519f16ec6/items" target="_blank" class="work-card work-ed reveal" data-cat="publish" style="text-decoration:none;">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Curation / Rakuten</div>
+          <div class="work-ed-title"><span>Rakuten</span><span class="gold">ROOM</span></div>
+        </div>
+        <div class="work-ed-sub">お買いものSNS / Curation</div>
+        <div class="work-ed-desc">気に入った日用品・ガジェットを<br>毎日キュレーション</div>
       </div>
     </a>
-    <div class="work-card reveal reveal-delay-1" data-cat="media">
-      <div class="work-thumb">
-        <img src="yt-image.png" alt="YouTube台本制作">
+    <div class="work-card work-ed reveal reveal-delay-1" data-cat="media">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Writing / Script</div>
+          <div class="work-ed-title"><span>YouTube</span><span class="gold">台本</span></div>
+        </div>
+        <div class="work-ed-sub">Short Film / Documentary</div>
+        <div class="work-ed-desc">事件解説・ホラー・ドキュメンタリーの<br>構成台本を制作</div>
       </div>
       <div class="work-overlay">
         <div class="work-overlay-title">YouTube台本</div>
