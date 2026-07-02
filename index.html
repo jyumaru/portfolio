@@ -284,6 +284,62 @@
     text-transform: uppercase; background: var(--bg2);
   }
 
+  /* ── Services ── */
+  #services { background: var(--bg); }
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 72px; background: var(--border); }
+  .service-card {
+    padding: clamp(36px, 3.2vw, 56px) clamp(26px, 2.6vw, 46px);
+    background: var(--bg2); display: flex; flex-direction: column;
+    position: relative; overflow: hidden; transition: background .3s;
+  }
+  .service-card:hover { background: var(--bg3); }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--gold); transition: width .5s ease;
+  }
+  .service-card:hover::after { width: 100%; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(12px, 1.1vw, 14px); color: var(--gold);
+    letter-spacing: 0.2em; margin-bottom: 24px; display: block;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(21px, 2vw, 30px); font-weight: 400; color: var(--dark); margin-bottom: 14px;
+  }
+  .service-name small {
+    display: block; font-family: 'Outfit', sans-serif; font-size: 10px;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-top: 8px;
+  }
+  .service-desc { font-size: clamp(13px, 1.1vw, 15px); line-height: 1.8; color: var(--muted); margin-bottom: 22px; }
+  .service-note { font-size: clamp(11px, 1vw, 12.5px); line-height: 1.7; color: var(--muted2); margin-bottom: 28px; }
+  .service-cta {
+    margin-top: auto; align-self: flex-start; font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--dark); text-decoration: none;
+    border-bottom: 1px solid var(--gold); padding-bottom: 4px; cursor: none; transition: color .3s;
+  }
+  .service-card:hover .service-cta { color: var(--gold); }
+  .services-pricing-note { font-size: clamp(12px, 1vw, 13.5px); line-height: 1.8; color: var(--muted2); max-width: 720px; margin-top: 36px; }
+
+  /* ── section lead / 事例カード拡張 ── */
+  .works-lead { font-size: clamp(14px, 1.2vw, 17px); line-height: 1.85; color: var(--muted); max-width: 680px; margin-top: 28px; }
+  .work-ov-line { font-size: clamp(12px, 1vw, 13.5px); line-height: 1.65; color: var(--muted); margin: 8px 0; }
+  .work-ov-line strong { color: var(--dark); font-weight: 500; }
+  .work-ai-note { margin-top: 14px; font-size: 10px; letter-spacing: 0.04em; color: var(--muted2); line-height: 1.5; }
+
+  /* ── Contact CTA 分岐 ── */
+  .contact-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 52px; }
+  .contact-ctas a {
+    padding: 14px 30px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none; color: #faf9f6; border: 1.5px solid rgba(250,249,246,0.3);
+    cursor: none; transition: border-color .3s, color .3s, background .3s;
+  }
+  .contact-ctas a:hover { border-color: var(--gold2); color: var(--gold2); }
+  .contact-ctas a.primary { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .contact-ctas a.primary:hover { background: var(--gold2); border-color: var(--gold2); color: #16140f; }
+  .contact-jbrain { margin-top: 36px; font-size: 12px; letter-spacing: 0.08em; color: rgba(250,249,246,.55); }
+  .contact-jbrain a { color: var(--gold2); text-decoration: none; border-bottom: 1px solid rgba(201,164,100,0.4); }
+
   /* ── Works ── */
   #works { background: var(--bg); }
   .works-filter {
@@ -509,6 +565,7 @@
   @media (max-width:1024px){
     .about-grid{grid-template-columns:1fr;gap:48px}
     .skills-grid{grid-template-columns:repeat(2,1fr)}
+    .services-grid{grid-template-columns:1fr}
     .links-grid{grid-template-columns:repeat(2,1fr)}
     .works-grid{grid-template-columns:1fr}
     .work-card:first-child{grid-column:span 1;aspect-ratio:4/3}
@@ -561,10 +618,10 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo">祠堂じゅまる</a>
     <ul class="nav-links">
+      <li><a href="#works">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#skills">Why</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#works">Works</a></li>
-      <li><a href="#links">Links</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -575,181 +632,141 @@
   <div class="hero-geo"></div>
   <div class="hero-vline"></div>
   <div class="hero-content">
-    <div class="hero-label">Producer &amp; Writer &nbsp;/&nbsp; AI Character Studio</div>
+    <div class="hero-label">AI Character Studio &nbsp;/&nbsp; 制作・運用・コンサル</div>
     <h1 class="hero-title">
-      <span class="line"><span>言葉と</span></span>
-      <span class="line"><span>キャラクターで</span></span>
-      <span class="line"><span>世界をつくる。</span></span>
+      <span class="line"><span>AIキャラクターを、</span></span>
+      <span class="line"><span>つくる。育てる。</span></span>
+      <span class="line"><span>任せられる。</span></span>
     </h1>
     <p class="hero-desc">
-      ライターとして言葉を紡ぎ、<br>
-      プロデューサーとしてAIキャラクターに命を吹き込む。<br>
-      JYUMARU は、AIと人間の創造性が交差するスタジオです。
+      複数のAIキャラを、毎日・規約を守って運用するスタジオ。<br>
+      顔も世界観もブレさせず、AIだと隠さずに続ける。<br>
+      その仕組みごと、あなたのブランドへお渡しします。
     </p>
     <div class="hero-cta">
-      <a href="#works" class="btn-primary">Works を見る</a>
-      <a href="mailto:jyumaru.shidou@gmail.com" class="btn-outline">お問い合わせ</a>
+      <a href="https://jbrain.space/" target="_blank" class="btn-primary">制作を相談する</a>
+      <a href="#works" class="btn-outline">実績を見る</a>
     </div>
   </div>
   <div class="scroll-hint">Scroll</div>
 </section>
 
-<!-- About -->
-<section id="about">
-  <div class="reveal"><div class="section-label">About</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">書く人であり、<br><em>つくる人である。</em></h2></div>
-  <div class="about-grid">
-    <div class="about-photo reveal reveal-delay-2">
-      <img src="about-image.png" alt="アートイメージ"
-        style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
-    </div>
-    <div class="about-text reveal reveal-delay-3">
-      <p><strong>はじめまして、祠堂じゅまるです。</strong>ライター・エッセイストとして言葉を綴りながら、AIキャラクタースタジオ「JYUMARU」を主宰しています。</p>
-      <p>noteでの毎日更新を軸に、AIと創作・テクノロジーと生活の間にある面白さを発信。「機嫌よくゆるく」をテーマに、読者の日常へ小さな気づきを届ける言葉を紡いでいます。</p>
-      <p>さらにプロデューサーとして、椎名しずく・月島宗介などのAIキャラクターや音楽プロジェクト Tangent を企画・運営。世界観の設計からビジュアル・文章・発信まで一貫して手がけています。</p>
-      <div class="about-stats">
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="300">0</span>
-          <span class="stat-label">note記事 +</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="5">0</span>
-          <span class="stat-label">キャラ運営 +</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="3">0</span>
-          <span class="stat-label">活動年数 +</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Skills -->
-<section id="skills">
-  <div class="reveal"><div class="section-label">Skills &amp; Expertise</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">得意とする<br><em>専門領域。</em></h2></div>
-  <div class="skills-grid">
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-num">01</span>
-      <div class="skill-name">Webライティング</div>
-      <div class="skill-desc">SEOを意識しながら読者に刺さる文章を執筆。CrowdWorksでのYouTubeスクリプト制作を含む多様なフォーマットに対応。</div>
-      <div class="skill-tags"><span class="tag">SEO記事</span><span class="tag">スクリプト</span><span class="tag">コピー</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-num">02</span>
-      <div class="skill-name">コンテンツ自動化</div>
-      <div class="skill-desc">Python・X API（tweepy）・MCPサーバー・Task Schedulerを組み合わせたX自動投稿基盤を構築。準備は自動化し、投稿の最終操作は規約に沿って手動で行う設計。</div>
-      <div class="skill-tags"><span class="tag">Python</span><span class="tag">X API</span><span class="tag">MCP</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-num">03</span>
-      <div class="skill-name">SNS運用</div>
-      <div class="skill-desc">X・note.comでの定期発信。ペルソナに合ったトーン設計とデータドリブンなコンテンツ改善が得意。</div>
-      <div class="skill-tags"><span class="tag">X / Twitter</span><span class="tag">note</span><span class="tag">分析</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-num">04</span>
-      <div class="skill-name">AIキャラクター運営</div>
-      <div class="skill-desc">顔・世界観の一貫性設計、ペルソナごとのトーン設計、AI明示のコンプライアンス運用まで。複数のAIキャラクターを安定して育てる運営ノウハウ。</div>
-      <div class="skill-tags"><span class="tag">ペルソナ設計</span><span class="tag">一貫性</span><span class="tag">AI明示</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-num">05</span>
-      <div class="skill-name">プロンプトデザイン</div>
-      <div class="skill-desc">Gemini・ClaudeなどLLMから高品質なコンテンツを生成させるプロンプト設計。AIを創造性の拡張ツールとして活用。</div>
-      <div class="skill-tags"><span class="tag">Gemini</span><span class="tag">Claude</span><span class="tag">LLM</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-num">06</span>
-      <div class="skill-name">音楽・ビジュアル制作</div>
-      <div class="skill-desc">SUNOによる楽曲制作（Tangent）からショート動画展開、AIビジュアルのアートディレクション（月島宗介）まで。音と映像でも世界観を立ち上げる。</div>
-      <div class="skill-tags"><span class="tag">SUNO</span><span class="tag">AIビジュアル</span><span class="tag">ショート動画</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- Works -->
+<!-- What We Make（実績＝AIキャラ群）を最上部へ昇格 -->
 <section id="works">
-  <div class="reveal"><div class="section-label">Selected Works</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">これまでの<br><em>制作物。</em></h2></div>
+  <div class="reveal"><div class="section-label">What We Make ／ 実績</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">毎日、動いている<br><em>AIキャラクターたち。</em></h2></div>
+  <p class="works-lead reveal reveal-delay-2">単発の作品ではなく、"毎日動き続けている"生きた実証です。AIバーチャルキャラクター・音楽ペルソナ・運用を支える自動化まで——ジャンルの幅そのものが、あなたの案件への対応力になります。カテゴリごとにご覧ください。</p>
   <div class="works-filter reveal reveal-delay-2">
     <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="design">デザイン・バナー</button>
-    <button class="filter-btn" data-filter="aikyara">AIキャラ</button>
-    <button class="filter-btn" data-filter="media">音楽・映像</button>
-    <button class="filter-btn" data-filter="writing">ライティング</button>
-    <button class="filter-btn" data-filter="publish">出版・その他</button>
+    <button class="filter-btn" data-filter="aikyara">AIキャラクター</button>
+    <button class="filter-btn" data-filter="music">音楽ペルソナ</button>
+    <button class="filter-btn" data-filter="auto">運用・自動化</button>
+    <button class="filter-btn" data-filter="other">Other Works</button>
   </div>
   <div class="works-grid">
-    <a href="supplement-banner.jpg" target="_blank" class="work-card reveal" data-cat="design" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="supplement-banner.jpg" alt="健康サプリ広告バナー 作例 生成AI×Canva">
-      </div>
+
+    <!-- AIキャラ: 椎名しずく -->
+    <a href="https://www.instagram.com/shizuku.417/" target="_blank" class="work-card reveal" data-cat="aikyara" style="text-decoration:none;">
+      <div class="work-thumb"><img src="shizuku-image.jpg" alt="椎名しずく @shizuku.417"></div>
       <div class="work-info-bar">
-        <div><div class="work-info-cat">Design / 広告バナー（作例）</div><div class="work-info-title">健康サプリ広告バナー — 生成AI×Canva</div></div>
+        <div><div class="work-info-cat">AI Character ／ 人物固定・秘書AI</div><div class="work-info-title">椎名しずく — @shizuku.417</div></div>
         <div class="work-arrow">→</div>
-      </div>
-    </a>
-    <a href="https://www.instagram.com/sousuke.tsukishima/" target="_blank" class="work-card reveal" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="tsukishima-image.jpg" alt="月島宗介 AI Visual Archivist">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character / Visual</div><div class="work-info-title">月島宗介 — @sousuke.tsukishima</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-    <a href="https://www.instagram.com/shizuku.417/" target="_blank" class="work-card reveal reveal-delay-1" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="shizuku-image.jpg" alt="椎名しずく @shizuku.417">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character / 秘書AI</div><div class="work-info-title">椎名しずく — @shizuku.417</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/@Tangent_com/shorts" target="_blank" class="work-card reveal reveal-delay-2" data-cat="media" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="tangent-image.jpg" alt="Tangent AI Music">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Music</div><div class="work-info-title">Tangent — YouTube Shorts</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-    <a href="https://note.com/rayphone" target="_blank" class="work-card reveal" data-cat="writing" style="text-decoration:none;">
-      <div class="work-thumb">
-        <img src="rayphone-image.jpg" alt="RayPhoneAI note">
-      </div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AIライティング</div><div class="work-info-title">RayPhoneAI — note</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-    <a href="https://note.com/jyumarucom" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="writing" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Lifestyle / Note</div>
-          <div class="work-ed-title"><span>祠堂</span><span class="gold">じゅまる</span></div>
-        </div>
-        <div class="work-ed-sub">note Creator / Lifestyle Blog</div>
-        <div class="work-ed-desc">ゆるっとミニマリストで<br>シンプルに生きていく</div>
-      </div>
-    </a>
-    <div class="work-card work-ed reveal reveal-delay-2" data-cat="publish">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Publishing / Kindle</div>
-          <div class="work-ed-title"><span>Kindle</span><span class="gold">出版</span></div>
-        </div>
-        <div class="work-ed-sub">鏑木一茶 — Author</div>
-        <div class="work-ed-desc">筋トレ・哲学・朝活をテーマに<br>11冊を出版</div>
       </div>
       <div class="work-overlay">
-        <div class="work-overlay-title">Kindle出版</div>
+        <div class="work-category">AI Character ／ 人物固定・秘書AI・日本語</div>
+        <div class="work-title-ov">椎名しずく</div>
+        <p class="work-ov-line">顔がブレないAIキャラを毎日投稿で維持。顔・髪を固定し、服とシーンだけ可変（NANOBANANA）。</p>
+        <p class="work-ov-line"><strong>対応できる案件</strong>：ブランドの"顔"キャラ制作／人物固定の連載ビジュアル</p>
+        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・毎日投稿</p>
+        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用・AI情報ラベルON）</div>
+      </div>
+    </a>
+
+    <!-- AIキャラ: 東雲哀（画像なし → editorial） -->
+    <a href="https://www.instagram.com/shinonome_ai_tokyo/" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="aikyara" style="text-decoration:none;">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">AI Character / Global</div>
+          <div class="work-ed-title"><span>東雲</span><span class="gold">哀</span></div>
+        </div>
+        <div class="work-ed-sub">Quiet Luxury × Tokyo Dawn ／ English</div>
+        <div class="work-ed-desc">海外向けAIインフルエンサーの立ち上げ実証。<br>IG→Threads→FBクロスシェアを確立。<br><span style="color:var(--muted2)">🤖 AIキャラクター（AI明示運用）</span></div>
+      </div>
+    </a>
+
+    <!-- AIキャラ: 月島宗介 -->
+    <a href="https://www.instagram.com/sousuke.tsukishima/" target="_blank" class="work-card reveal reveal-delay-2" data-cat="aikyara" style="text-decoration:none;">
+      <div class="work-thumb"><img src="tsukishima-image.jpg" alt="月島宗介 AI Visual Archivist"></div>
+      <div class="work-info-bar">
+        <div><div class="work-info-cat">AI Character ／ 世界観固定</div><div class="work-info-title">月島宗介 — @sousuke.tsukishima</div></div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-category">AI Character ／ 世界観固定・住民可変</div>
+        <div class="work-title-ov">月島宗介</div>
+        <p class="work-ov-line">ダーク脱彩度の世界観を固定し、被写体（住民）を毎回変える。人物固定とは"逆"のアプローチ。</p>
+        <p class="work-ov-line"><strong>対応できる案件</strong>：ブランド世界観の連作ビジュアル／アート寄り案件</p>
+        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・収蔵カタログ拡張中</p>
+        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用）</div>
+      </div>
+    </a>
+
+    <!-- 音楽ペルソナ: Tangent -->
+    <a href="https://www.youtube.com/@Tangent_com/shorts" target="_blank" class="work-card reveal" data-cat="music" style="text-decoration:none;">
+      <div class="work-thumb"><img src="tangent-image.jpg" alt="Tangent AI Music"></div>
+      <div class="work-info-bar">
+        <div><div class="work-info-cat">Music Persona ／ AI Music</div><div class="work-info-title">Tangent — YouTube Shorts</div></div>
+        <div class="work-arrow">→</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-category">Music Persona ／ AI音楽IP</div>
+        <div class="work-title-ov">Tangent</div>
+        <p class="work-ov-line">作詞・楽曲生成からShorts／TikTok展開まで一気通貫。音のキャラIP化。</p>
+        <p class="work-ov-line"><strong>対応できる案件</strong>：楽曲キャラ・サウンドロゴ・音のIP化</p>
+        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AI生成楽曲（AI明示運用）</div>
+      </div>
+    </a>
+
+    <!-- 音楽ペルソナ: TRINITAS（公開リンク未確定→非リンク） -->
+    <div class="work-card work-ed reveal reveal-delay-1" data-cat="music">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Music Persona / DSP</div>
+          <div class="work-ed-title"><span>TRINI</span><span class="gold">TAS</span></div>
+        </div>
+        <div class="work-ed-sub">和風 × Vocal Unit ／ 世界配信</div>
+        <div class="work-ed-desc">作詞〜楽曲〜DSP配信まで。<br>日英2言語で展開する音楽ユニット。<br><span style="color:var(--muted2)">🤖 AI音楽（AI明示運用）</span></div>
+      </div>
+    </div>
+
+    <!-- 音楽ペルソナ: 小夜（公開リンク未確定→非リンク） -->
+    <div class="work-card work-ed reveal reveal-delay-2" data-cat="music">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Music Persona / Mood</div>
+          <div class="work-ed-title"><span>小夜</span><span class="gold">Sayo</span></div>
+        </div>
+        <div class="work-ed-sub">薄明 & 明るい ／ 2モード</div>
+        <div class="work-ed-desc">情景を描く楽曲IP。<br>週次で楽曲を制作・展開。<br><span style="color:var(--muted2)">🤖 AI音楽（AI明示運用）</span></div>
+      </div>
+    </div>
+
+    <!-- 運用・自動化: 鏑木一茶（Kindle＋X自動化） -->
+    <div class="work-card work-ed reveal" data-cat="auto">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Author IP / Automation</div>
+          <div class="work-ed-title"><span>鏑木</span><span class="gold">一茶</span></div>
+        </div>
+        <div class="work-ed-sub">Kindle著者 ＋ X自動投稿基盤</div>
+        <div class="work-ed-desc">AIキャラ×著者ブランディングと<br>運用自動化の実装。</div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-overlay-title">著者IP × 自動化（Kindle出版）</div>
         <div class="work-overlay-links">
           <a href="https://www.amazon.co.jp/stores/author/B0G1HSNTYH" target="_blank" class="work-overlay-link">著者ページ（11冊） <span>↗</span></a>
           <a href="https://amzn.asia/d/0iunBxaR" target="_blank" class="work-overlay-link">50代からの筋トレ革命 <span>↗</span></a>
@@ -757,9 +774,56 @@
           <a href="https://amzn.asia/d/0ds66ILJ" target="_blank" class="work-overlay-link">“忙しい”を言い訳にしない筋トレ入門 <span>↗</span></a>
           <a href="https://amzn.asia/d/0gK76YN5" target="_blank" class="work-overlay-link">筋トレ経営者の「時間哲学」 <span>↗</span></a>
         </div>
+        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ 運用自動化の実装実績</div>
       </div>
     </div>
-    <a href="https://room.rakuten.co.jp/room_4519f16ec6/items" target="_blank" class="work-card work-ed reveal" data-cat="publish" style="text-decoration:none;">
+
+    <!-- 運用・自動化: じゅまるX -->
+    <div class="work-card work-ed reveal reveal-delay-1" data-cat="auto">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Automation / Low-cost</div>
+          <div class="work-ed-title"><span>X自動</span><span class="gold">運用</span></div>
+        </div>
+        <div class="work-ed-sub">GitHub Actions × Gemini</div>
+        <div class="work-ed-desc">X自動投稿をクラウド放置運用へ。<br>準備の自動化を極限まで下げる実装ノウハウ。</div>
+      </div>
+    </div>
+
+    <!-- Other Works: 広告バナー作例 -->
+    <a href="supplement-banner.jpg" target="_blank" class="work-card reveal" data-cat="other" style="text-decoration:none;">
+      <div class="work-thumb"><img src="supplement-banner.jpg" alt="健康サプリ広告バナー 作例 生成AI×Canva"></div>
+      <div class="work-info-bar">
+        <div><div class="work-info-cat">Design ／ 広告バナー（作例）</div><div class="work-info-title">健康サプリ広告バナー — 生成AI×Canva</div></div>
+        <div class="work-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Other Works: RayPhoneAI note -->
+    <a href="https://note.com/rayphone" target="_blank" class="work-card reveal reveal-delay-1" data-cat="other" style="text-decoration:none;">
+      <div class="work-thumb"><img src="rayphone-image.jpg" alt="RayPhoneAI note"></div>
+      <div class="work-info-bar">
+        <div><div class="work-info-cat">Writing ／ AIライティング</div><div class="work-info-title">RayPhoneAI — note</div></div>
+        <div class="work-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Other Works: 祠堂じゅまる note -->
+    <a href="https://note.com/jyumarucom" target="_blank" class="work-card work-ed reveal reveal-delay-2" data-cat="other" style="text-decoration:none;">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">Lifestyle / Note</div>
+          <div class="work-ed-title"><span>祠堂</span><span class="gold">じゅまる</span></div>
+        </div>
+        <div class="work-ed-sub">note Creator / Lifestyle Blog</div>
+        <div class="work-ed-desc">AIと創作・暮らしの間を綴る<br>ライフスタイルメディア</div>
+      </div>
+    </a>
+
+    <!-- Other Works: 楽天ROOM -->
+    <a href="https://room.rakuten.co.jp/room_4519f16ec6/items" target="_blank" class="work-card work-ed reveal" data-cat="other" style="text-decoration:none;">
       <div class="work-ed-circles"></div>
       <div class="work-ed-inner">
         <div class="work-ed-head">
@@ -767,10 +831,12 @@
           <div class="work-ed-title"><span>Rakuten</span><span class="gold">ROOM</span></div>
         </div>
         <div class="work-ed-sub">お買いものSNS / Curation</div>
-        <div class="work-ed-desc">気に入った日用品・ガジェットを<br>毎日キュレーション</div>
+        <div class="work-ed-desc">日用品・ガジェットを<br>毎日キュレーション</div>
       </div>
     </a>
-    <div class="work-card work-ed reveal reveal-delay-1" data-cat="media">
+
+    <!-- Other Works: YouTube台本 -->
+    <div class="work-card work-ed reveal reveal-delay-1" data-cat="other">
       <div class="work-ed-circles"></div>
       <div class="work-ed-inner">
         <div class="work-ed-head">
@@ -788,6 +854,107 @@
           <a href="https://docs.google.com/document/d/1xW95c_YEYoOK1rxV8Vo-Tp9D4dMjGcziajrzwEjixzw/edit" target="_blank" class="work-overlay-link">国松警察庁長官狙撃事件 <span>↗</span></a>
           <a href="https://www.youtube.com/watch?v=MhmKwppqImI" target="_blank" class="work-overlay-link">お化け屋敷（ショート） <span>↗</span></a>
           <a href="https://www.youtube.com/watch?v=OXi3pa_0Edc" target="_blank" class="work-overlay-link">タイムカプセル（ショート） <span>↗</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Services（提供サービス）を新設 -->
+<section id="services">
+  <div class="reveal"><div class="section-label">Services ／ 提供サービス</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">3つの<br><em>関わり方。</em></h2></div>
+  <p class="works-lead reveal reveal-delay-2">「キャラを丸ごと作ってほしい」「作る時間がない、運用だけ任せたい」「自分で作れるようになりたい」。フェーズに合わせて、3つの関わり方から選べます。</p>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-num">01</span>
+      <div class="service-name">制作代行<small>Production</small></div>
+      <div class="service-desc">ブランドの"顔"となるAIキャラをゼロから設計・制作。キャラ設計＋固定リファレンス構築＋初期ビジュアル一式。顔・世界観がブレない設計込み。</div>
+      <div class="service-note">"どんな顔でも・どんな世界観でも作れる"は、現に毎日運用中のAIキャラが証明しています。</div>
+      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-num">02</span>
+      <div class="service-name">運用代行<small>Operation</small></div>
+      <div class="service-desc">画像・キャプション・投稿パケットの制作と納品まで。更新が続かない／毎日の制作工数がない、を肩代わりします。</div>
+      <div class="service-note">投稿ボタンは、必ずお客様の手で（またはMeta公式予約で）。JYUMARUは"準備"までを引き受け、規約を守ります。</div>
+      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-num">03</span>
+      <div class="service-name">コンサル／伴走<small>Consulting</small></div>
+      <div class="service-desc">社内で内製したい・立ち上げの設計だけ相談したい方へ。顔固定メソッド・多言語立ち上げ・低コスト自動運用の設計と伴走。</div>
+      <div class="service-note">机上論ではありません。毎日実運用している人間が、つまずき所ごとお渡しします。</div>
+      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
+    </div>
+  </div>
+  <p class="services-pricing-note reveal reveal-delay-2">料金は"制作物の質と工数"で決まります（フォロワー数では決めません）。撮影・モデル・スタジオが不要なぶん、従来のビジュアル制作より軽い初期費用から始められます。詳しい料金の考え方は、ご相談時にお伝えします。</p>
+</section>
+
+<!-- Why JYUMARU（選ばれる理由・旧Skills） -->
+<section id="skills">
+  <div class="reveal"><div class="section-label">Why JYUMARU ／ 選ばれる理由</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">だから、<br><em>任せられる。</em></h2></div>
+  <div class="skills-grid">
+    <div class="skill-card reveal reveal-delay-1">
+      <span class="skill-num">01</span>
+      <div class="skill-name">顔がブレない</div>
+      <div class="skill-desc">顔・髪を固定し服とシーンだけ可変するメソッドで、毎日投稿でも同一人物性を保持。連載ビジュアルの"顔"を安定して供給します。</div>
+      <div class="skill-tags"><span class="tag">人物固定</span><span class="tag">一貫性</span></div>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <span class="skill-num">02</span>
+      <div class="skill-name">世界観が続く</div>
+      <div class="skill-desc">脱彩度・質感・光まで世界観を固定し、被写体を変えても崩れない連作を設計。ブランドのトーンを長期に保ちます。</div>
+      <div class="skill-tags"><span class="tag">世界観固定</span><span class="tag">アートディレクション</span></div>
+    </div>
+    <div class="skill-card reveal reveal-delay-3">
+      <span class="skill-num">03</span>
+      <div class="skill-name">多言語で届く</div>
+      <div class="skill-desc">日本語だけでなく英語Globalの立ち上げ実証あり。IG→Threads→FBのクロスシェアまで、越境の導線を設計します。</div>
+      <div class="skill-tags"><span class="tag">英語Global</span><span class="tag">越境</span></div>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <span class="skill-num">04</span>
+      <div class="skill-name">低コストで回る</div>
+      <div class="skill-desc">Python・API・クラウドで"準備"を自動化し、運用工数を極限まで圧縮。撮影・モデル・スタジオ不要の軽い制作基盤。</div>
+      <div class="skill-tags"><span class="tag">自動化</span><span class="tag">低コスト</span></div>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <span class="skill-num">05</span>
+      <div class="skill-name">AI明示で、続く</div>
+      <div class="skill-desc">すべてAIキャラクターであることを明示し、投稿の瞬間は自動化しない設計。"バレなければいい"ではなく"続けられる作り方"を共有します。</div>
+      <div class="skill-tags"><span class="tag">AI明示</span><span class="tag">規約順守</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- About（誰がやっているか） -->
+<section id="about">
+  <div class="reveal"><div class="section-label">About ／ 誰がやっているか</div></div>
+  <div class="reveal reveal-delay-1"><h2 class="section-title">一人で、複数のキャラを<br><em>毎日動かす人。</em></h2></div>
+  <div class="about-grid">
+    <div class="about-photo reveal reveal-delay-2">
+      <img src="about-image.png" alt="アートイメージ"
+        style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+    </div>
+    <div class="about-text reveal reveal-delay-3">
+      <p><strong>祠堂じゅまる（JYUMARU）</strong>は、AIキャラクターを"資産"として設計・制作・運用する日本のAIキャラクタースタジオです。</p>
+      <p>椎名しずく・東雲哀・月島宗介といったAIバーチャルキャラクターと、音楽ペルソナ、実名メンバーの運用自動化まで。企画・ビジュアル・文章・多言語発信を、一貫して自社運用しています。</p>
+      <p>その運用ノウハウそのものを、<strong>制作代行・運用代行・コンサルティング</strong>としてお渡しします。毎日、規約を守って動かし続けている——その事実が、あなたの案件を安心して任せられる理由です。</p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-num counter" data-target="3">0</span>
+          <span class="stat-label">AIキャラ 体</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num counter" data-target="3">0</span>
+          <span class="stat-label">音楽ペルソナ 組</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num counter" data-target="100">0</span>
+          <span class="stat-label">AI明示 %</span>
         </div>
       </div>
     </div>
@@ -833,10 +1000,16 @@
 <!-- Contact -->
 <section id="contact">
   <div class="contact-inner">
-    <div class="reveal"><span class="contact-label">Contact</span></div>
+    <div class="reveal"><span class="contact-label">Contact ／ Work with us</span></div>
     <div class="reveal reveal-delay-1">
-      <h2 class="contact-title">Let's work<br><em>together.</em></h2>
-      <p class="contact-sub">お仕事のご依頼・ご相談はお気軽にどうぞ。</p>
+      <h2 class="contact-title">まずは、<br><em>ご相談から。</em></h2>
+      <p class="contact-sub">制作代行・運用代行・コンサル。フェーズを問わず、無料でご相談を承っています。</p>
+      <div class="contact-ctas">
+        <a href="https://jbrain.space/" target="_blank" class="primary">制作代行を相談</a>
+        <a href="https://jbrain.space/" target="_blank">運用代行を相談</a>
+        <a href="https://jbrain.space/" target="_blank">コンサルを相談</a>
+      </div>
+      <p class="contact-jbrain">詳しい会社情報・お問い合わせは <a href="https://jbrain.space/" target="_blank">jbrain.space</a> へ。</p>
       <a href="mailto:jyumaru.shidou@gmail.com" class="contact-email">jyumaru.shidou@gmail.com</a>
     </div>
   </div>
@@ -844,6 +1017,7 @@
 
 <footer>
   <div class="footer-copy">© 2026 祠堂じゅまる / JYUMARU. All rights reserved.</div>
+  <a href="https://jbrain.space/" target="_blank" style="font-size:11px;letter-spacing:0.14em;color:rgba(250,249,246,.5);text-decoration:none;">JYUMARU 公式サイト ↗</a>
   <div class="footer-logo">祠堂じゅまる</div>
 </footer>
 
