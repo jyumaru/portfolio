@@ -134,8 +134,8 @@
 
   .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(64px, 7vw, 112px);
-    font-weight: 300; line-height: 0.93; letter-spacing: -0.02em;
+    font-size: clamp(46px, 6.2vw, 92px);
+    font-weight: 300; line-height: 0.98; letter-spacing: -0.02em;
   }
   .hero-title .line { display: block; overflow: hidden; }
   .hero-title .line span {
@@ -143,8 +143,9 @@
     animation: slideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
   }
   .hero-title .line:nth-child(1) span { animation-delay: .5s; }
-  .hero-title .line:nth-child(2) span { animation-delay: .65s; }
-  .hero-title .line:nth-child(3) span { animation-delay: .8s; color: var(--gold); font-style: italic; }
+  .hero-title .line:nth-child(2) span { animation-delay: .62s; }
+  .hero-title .line:nth-child(3) span { animation-delay: .74s; }
+  .hero-title .line:nth-child(4) span { animation-delay: .86s; color: var(--gold); font-style: italic; }
 
   .hero-desc {
     margin-top: 36px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.85;
@@ -571,7 +572,7 @@
     .work-card:first-child{grid-column:span 1;aspect-ratio:4/3}
   }
   @media (max-width:640px){
-    .hero-title{font-size:52px}
+    .hero-title{font-size:46px}
     .skills-grid,.links-grid{grid-template-columns:1fr}
     .about-stats{gap:24px}
     .works-filter{gap:16px;flex-wrap:wrap}
@@ -634,8 +635,9 @@
   <div class="hero-content">
     <div class="hero-label">AI Character Studio &nbsp;/&nbsp; 制作・運用・コンサル</div>
     <h1 class="hero-title">
-      <span class="line"><span>AIキャラクターを、</span></span>
-      <span class="line"><span>つくる。育てる。</span></span>
+      <span class="line"><span>AIキャラを、</span></span>
+      <span class="line"><span>つくる。</span></span>
+      <span class="line"><span>育てる。</span></span>
       <span class="line"><span>任せられる。</span></span>
     </h1>
     <p class="hero-desc">
@@ -854,11 +856,15 @@
     </a>
 
     <!-- Other Works: RayPhoneAI note -->
-    <a href="https://note.com/rayphone" target="_blank" class="work-card reveal reveal-delay-1" data-cat="other" style="text-decoration:none;">
-      <div class="work-thumb" style="background:#f5f1ea;"><img src="rayphone-image.jpg" alt="RayPhoneAI note — AIライティング" style="object-fit:contain;background:#f5f1ea;"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">Writing ／ AIライティング</div><div class="work-info-title">RayPhoneAI — note</div></div>
-        <div class="work-arrow">→</div>
+    <a href="https://note.com/rayphone" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="other" style="text-decoration:none;">
+      <div class="work-ed-circles"></div>
+      <div class="work-ed-inner">
+        <div class="work-ed-head">
+          <div class="work-ed-eyebrow">AI Persona / Note</div>
+          <div class="work-ed-title"><span>RayPhone</span><span class="gold">AI</span></div>
+        </div>
+        <div class="work-ed-sub">AIの"使い方"を実体験で ／ note</div>
+        <div class="work-ed-desc">「AIの私が、実際にやって・しくじった記録」。<br>実務で使えるAIの"使い方"を、実体験ベースで綴る。<br><span style="color:var(--muted2)">🤖 AIキャラクター（AI明示運用）</span></div>
       </div>
     </a>
 
@@ -867,11 +873,11 @@
       <div class="work-ed-circles"></div>
       <div class="work-ed-inner">
         <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Lifestyle / Note</div>
+          <div class="work-ed-eyebrow">AI Notes / Note</div>
           <div class="work-ed-title"><span>祠堂</span><span class="gold">じゅまる</span></div>
         </div>
-        <div class="work-ed-sub">note Creator / Lifestyle Blog</div>
-        <div class="work-ed-desc">AIと創作・暮らしの間を綴る<br>ライフスタイルメディア</div>
+        <div class="work-ed-sub">note Creator / AI実装ノウハウ</div>
+        <div class="work-ed-desc">AIキャラ制作・自動化の実装ノウハウと<br>制作の裏側を毎日綴るnote</div>
       </div>
     </a>
 
@@ -1026,7 +1032,7 @@
       <p>その運用ノウハウそのものを、<strong>制作代行・運用代行・コンサルティング</strong>としてお渡しします。毎日、規約を守って動かし続けている——その事実が、あなたの案件を安心して任せられる理由です。</p>
       <div class="about-stats">
         <div class="stat-item">
-          <span class="stat-num counter" data-target="5">0</span>
+          <span class="stat-num counter" data-target="12">0</span>
           <span class="stat-label">AIキャラ 体</span>
         </div>
         <div class="stat-item">
@@ -1047,32 +1053,60 @@
   <div class="reveal"><div class="section-label">Connect</div></div>
   <div class="reveal reveal-delay-1"><h2 class="section-title">各プラットフォームで<br><em>発信中。</em></h2></div>
   <div class="links-grid">
-    <a href="https://www.instagram.com/shizuku.417/" class="link-card reveal reveal-delay-1" target="_blank">
+    <a href="https://www.instagram.com/iroha.kurosaki/" class="link-card reveal reveal-delay-1" target="_blank">
       <div class="link-icon">✦</div>
       <div class="link-platform">Instagram</div>
-      <div class="link-name">JYUMARU<br>AI Studio</div>
-      <div class="link-desc">黒崎いろは・椎名しずく・月島宗介・逢坂千秋などAIキャラクターの発信拠点</div>
+      <div class="link-name">AIキャラ<br>各アカウント</div>
+      <div class="link-desc">黒崎いろは・椎名しずく・月島宗介・東雲哀・逢坂千秋のAIキャラクター発信拠点</div>
       <div class="link-arrow">↗</div>
     </a>
-    <a href="https://note.com/jyumarucom" class="link-card reveal reveal-delay-2" target="_blank">
+    <a href="https://x.com/jyumarucom" class="link-card reveal reveal-delay-2" target="_blank">
+      <div class="link-icon">✕</div>
+      <div class="link-platform">X (Twitter)</div>
+      <div class="link-name">祠堂じゅまる<br>／ 鏑木一茶</div>
+      <div class="link-desc">スタジオの視点と、AIキャラ鏑木一茶・RayPhoneAIの自動投稿運用</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a href="https://note.com/jyumarucom" class="link-card reveal reveal-delay-3" target="_blank">
       <div class="link-icon">◈</div>
       <div class="link-platform">note.com</div>
       <div class="link-name">祠堂<br>じゅまる</div>
-      <div class="link-desc">ミニマリズム・読書・生き方を綴るライフスタイルメディア</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://www.youtube.com/@Tangent_com/shorts" class="link-card reveal reveal-delay-3" target="_blank">
-      <div class="link-icon">▷</div>
-      <div class="link-platform">YouTube</div>
-      <div class="link-name">Tangent<br>Music</div>
-      <div class="link-desc">AI生成楽曲をショート動画で展開する音楽プロジェクト</div>
+      <div class="link-desc">AIキャラ制作・自動化の実装ノウハウと制作の裏側を綴るnote</div>
       <div class="link-arrow">↗</div>
     </a>
     <a href="https://note.com/rayphone" class="link-card reveal reveal-delay-4" target="_blank">
       <div class="link-icon">◇</div>
       <div class="link-platform">note.com</div>
       <div class="link-name">RayPhone<br>AI</div>
-      <div class="link-desc">AI×ライティングをテーマに発信するnoteメディア</div>
+      <div class="link-desc">「AIの私が、実際にやって・しくじった記録」。AIの"使い方"を実体験ベースで</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a href="https://www.youtube.com/@Tangent_com/shorts" class="link-card reveal reveal-delay-1" target="_blank">
+      <div class="link-icon">▷</div>
+      <div class="link-platform">YouTube / TikTok</div>
+      <div class="link-name">Tangent<br>Music</div>
+      <div class="link-desc">AI生成楽曲を毎日ショート動画で展開する音楽プロジェクト</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a href="https://stand.fm/channels/6a516f768a6172d42da7262f" class="link-card reveal reveal-delay-2" target="_blank">
+      <div class="link-icon">◍</div>
+      <div class="link-platform">stand.fm</div>
+      <div class="link-name">逢坂千秋<br>名残帖（声）</div>
+      <div class="link-desc">逢坂千秋の専用AI音声による朗読。言葉と声で"名残"を留める</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a href="https://distrokid.com/hyperfollow/trinitas1/meguri" class="link-card reveal reveal-delay-3" target="_blank">
+      <div class="link-icon">♫</div>
+      <div class="link-platform">Spotify / DSP</div>
+      <div class="link-name">TRINITAS<br>／ 小夜</div>
+      <div class="link-desc">和風ユニットTRINITAS・小夜（Sayo）の楽曲を各ストリーミングで配信</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a href="https://www.redbubble.com/people/jyumaru/shop" class="link-card reveal reveal-delay-4" target="_blank">
+      <div class="link-icon">◆</div>
+      <div class="link-platform">Redbubble</div>
+      <div class="link-name">JYUMARU<br>Goods</div>
+      <div class="link-desc">浮世絵・和モチーフのアートをプリントオンデマンドで展開する物販</div>
       <div class="link-arrow">↗</div>
     </a>
   </div>
