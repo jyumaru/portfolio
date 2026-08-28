@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JYUMARU｜Web制作・業務ツール開発</title>
+<meta name="description" content="LP・ホームページ・広告バナー・業務ツールの制作。要件が固まっていない段階から、まず小さく作ってお見せします。神奈川・JYUMARU（塩島努）。">
+<link rel="icon" href="../favicon.png">
+<meta property="og:title" content="JYUMARU｜Web制作・業務ツール開発">
+<meta property="og:description" content="「こういうの作れる？」から、始められます。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0e1c2e; --navy-d:#0a1626;
+  --accent:#2e86c8; --accent-d:#1b5f94;
+  --ink:#0e1c2e; --gray:#6b7a8a; --gray-l:#8b98a5;
+  --line:#dde2e7; --bg:#ffffff; --bg2:#f4f6f8;
+  --pad:clamp(20px,5vw,80px); --max:1280px;
+  --r:4px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.9;
+  font-size:15px;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{padding:clamp(64px,9vw,110px) 0}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.24em;color:var(--accent);text-align:center}
+.sec-h2{font-size:clamp(24px,4.6vw,38px);font-weight:900;line-height:1.6;letter-spacing:-.01em;text-align:center;margin-top:18px}
+.sec-sub{font-size:clamp(13px,2.6vw,15px);color:var(--gray);text-align:center;margin-top:18px;line-height:1.9}
+.sec-head{margin-bottom:clamp(40px,6vw,60px)}
+.dark{background:var(--navy-d);color:#fff}
+.dark .sec-h2{color:#fff}
+.dark .sec-sub{color:rgba(255,255,255,.62)}
+.light{background:var(--bg2)}
+
+header{position:sticky;top:0;z-index:50;background:rgba(14,28,46,.94);backdrop-filter:blur(8px)}
+.hd{display:flex;align-items:center;gap:16px;padding-top:16px;padding-bottom:16px}
+.hd-logo{font-weight:700;font-size:16px;letter-spacing:.14em;color:#fff;text-decoration:none;white-space:nowrap}
+.hd-logo small{display:block;font-size:9px;letter-spacing:.2em;color:rgba(255,255,255,.5);font-weight:400;margin-top:2px}
+.hd-nav{margin-left:auto;display:flex;gap:26px}
+.hd-nav a{font-size:13px;color:rgba(255,255,255,.8);text-decoration:none}
+.hd-nav a:hover{color:#fff}
+.hd-cta{background:var(--accent);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:11px 20px;border-radius:var(--r);white-space:nowrap}
+.hd-cta:hover{background:var(--accent-d)}
+@media(max-width:860px){.hd-nav{display:none}.hd-logo small{display:none}}
+
+.hero{background:var(--navy-d);color:#fff;padding:clamp(56px,10vw,104px) 0 clamp(48px,8vw,88px);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 82% 18%,rgba(46,134,200,.20),transparent 62%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.08em;color:var(--accent);font-weight:500}
+.eyebrow i{width:30px;height:2px;background:var(--accent);flex:none}
+.hero h1{font-size:clamp(28px,6.4vw,58px);font-weight:900;line-height:1.5;letter-spacing:-.02em;margin-top:22px}
+.hero p.lead{font-size:clamp(13px,2.8vw,16px);color:rgba(255,255,255,.78);line-height:2;margin-top:24px;max-width:660px}
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn{display:block;text-decoration:none;border-radius:var(--r);padding:18px 32px;text-align:center}
+.btn b{display:block;font-size:16px;font-weight:700;color:#fff}
+.btn span{display:block;font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.72);margin-top:2px}
+.btn-p{background:var(--accent)}
+.btn-p:hover{background:var(--accent-d)}
+.btn-s{border:1px solid rgba(255,255,255,.4)}
+.btn-s:hover{background:rgba(255,255,255,.07)}
+.stats{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,48px);margin-top:clamp(36px,6vw,56px)}
+.stat b{display:block;font-size:clamp(22px,4.4vw,32px);font-weight:700;line-height:1.2}
+.stat b em{font-style:normal;font-size:13px;font-weight:500;color:rgba(255,255,255,.7);margin-left:5px}
+.stat span{display:block;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.55);margin-top:6px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3.4vw,32px)}
+.card .no{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--accent)}
+.card h3{font-size:clamp(15px,2.8vw,17px);font-weight:700;line-height:1.7;margin-top:12px}
+.card .bar{width:26px;height:2px;background:var(--accent);margin:14px 0}
+.card p{font-size:13px;color:var(--gray);line-height:1.95}
+
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.svc-i{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,3.4vw,34px)}
+.svc-i .ic{font-size:22px;line-height:1}
+.svc-i h3{font-size:17px;font-weight:700;margin-top:16px}
+.svc-i .en{font-size:10px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin-top:6px}
+.svc-i p{font-size:13px;color:var(--gray);line-height:1.95;margin-top:14px}
+.svc-i ul{list-style:none;margin-top:14px;display:flex;flex-wrap:wrap;gap:7px}
+.svc-i li{font-size:11px;color:var(--gray);background:var(--bg2);border:1px solid var(--line);border-radius:100px;padding:5px 12px}
+
+.works{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px}
+.work{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:box-shadow .2s,transform .2s}
+a.work:hover{box-shadow:0 10px 34px rgba(14,28,46,.10);transform:translateY(-2px)}
+.work-top{background:var(--navy);color:#fff;padding:clamp(26px,3.4vw,32px);position:relative;overflow:hidden}
+.work-top::after{content:"";position:absolute;inset:0;background:radial-gradient(420px 200px at 88% 12%,rgba(46,134,200,.30),transparent 65%)}
+.work-top *{position:relative;z-index:1}
+.work-img{aspect-ratio:16/9;background:var(--navy);overflow:hidden}
+.work-img img{width:100%;height:100%;object-fit:cover}
+.work-cap{padding:clamp(20px,2.8vw,26px) clamp(24px,3.2vw,30px) 0}
+.work-cap .work-kind{color:var(--accent)}
+.work-cap h3{font-size:clamp(17px,3.2vw,21px);font-weight:900;line-height:1.55;margin-top:10px}
+.work-cap .work-note{background:var(--bg2);border:1px solid var(--line);color:var(--gray)}
+.work-kind{font-size:10px;letter-spacing:.18em;font-weight:700;color:#7fbdea}
+.work-top h3{font-size:clamp(17px,3.2vw,21px);font-weight:900;line-height:1.55;margin-top:12px}
+.work-note{display:inline-block;font-size:10px;letter-spacing:.06em;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:3px;padding:4px 10px;margin-top:14px;color:rgba(255,255,255,.88)}
+.work-body{padding:clamp(24px,3.2vw,30px);flex:1;display:flex;flex-direction:column}
+.work-body p{font-size:13px;color:var(--gray);line-height:1.95}
+.work-meta{list-style:none;margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.work-meta li{display:flex;gap:14px;font-size:12px;padding:6px 0;line-height:1.7}
+.work-meta li b{flex:none;width:76px;font-weight:700;color:var(--ink)}
+.work-meta li span{color:var(--gray)}
+.work-link{margin-top:18px;font-size:12px;font-weight:700;color:var(--accent)}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(26px,3.2vw,32px) 22px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.step .badge{width:40px;height:40px;border-radius:100px;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.step h3{font-size:16px;font-weight:700;margin-top:14px;line-height:1.6}
+.step .dur{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--accent);margin-top:8px}
+.step p{font-size:12px;color:var(--gray);line-height:1.9;margin-top:10px}
+
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.pf{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:clamp(24px,3.2vw,30px)}
+.pf b{display:block;font-size:clamp(19px,3.4vw,24px);font-weight:900;line-height:1.5}
+.pf .t{font-size:12px;font-weight:700;letter-spacing:.04em;color:#7fbdea;margin-top:12px}
+.pf p{font-size:12.5px;color:rgba(255,255,255,.66);line-height:2;margin-top:12px}
+.disclose{margin-top:clamp(32px,5vw,44px);border:1px solid rgba(255,255,255,.16);border-radius:var(--r);padding:clamp(22px,3.2vw,28px);background:rgba(255,255,255,.03)}
+.disclose h3{font-size:14px;font-weight:700;color:#fff}
+.disclose p{font-size:12.5px;color:rgba(255,255,255,.66);line-height:2;margin-top:10px}
+
+.qa{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.qa-i{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,28px) clamp(22px,3vw,30px)}
+.qa-r{display:flex;gap:14px;align-items:flex-start}
+.qa-r+.qa-r{margin-top:14px}
+.qa-r .m{flex:none;width:18px;font-size:17px;font-weight:900;line-height:1.5}
+.qa-r.q .m{color:var(--accent)}
+.qa-r.a .m{color:var(--gray-l)}
+.qa-r.q p{font-size:clamp(14px,2.8vw,16px);font-weight:700;line-height:1.7}
+.qa-r.a p{font-size:13px;color:var(--gray);line-height:2}
+
+.cta{background:var(--navy-d);color:#fff;text-align:center;padding:clamp(64px,9vw,104px) 0 0}
+.cta h2{font-size:clamp(24px,5.2vw,42px);font-weight:900;line-height:1.5;letter-spacing:-.01em;margin-top:18px}
+.cta p.lead{font-size:clamp(13px,2.6vw,15px);color:rgba(255,255,255,.72);line-height:2;margin-top:22px}
+.cta .btns{justify-content:center}
+.cta-note{font-size:12px;color:rgba(255,255,255,.5);margin-top:26px;line-height:1.9}
+footer{border-top:1px solid rgba(255,255,255,.12);margin-top:clamp(48px,7vw,72px);padding:30px 0}
+.ft{display:flex;flex-wrap:wrap;gap:14px;align-items:center;text-align:left}
+.ft-l b{font-size:15px;font-weight:700;letter-spacing:.1em}
+.ft-l p{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px;line-height:1.8}
+.ft-r{margin-left:auto;font-size:11px;color:rgba(255,255,255,.4)}
+.ft-r a{color:rgba(255,255,255,.6);text-decoration:none;margin-left:16px}
+.ft-r a:hover{color:#fff}
+@media(max-width:600px){.ft-r{margin-left:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap hd">
+    <a href="#" class="hd-logo">JYUMARU<small>WEB &amp; TOOL DEVELOPMENT</small></a>
+    <nav class="hd-nav">
+      <a href="#service">できること</a>
+      <a href="#works">作例</a>
+      <a href="#flow">進め方</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <a href="https://jbrain.space/" target="_blank" rel="noopener" class="hd-cta">制作を相談する</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><i></i>Web制作 ／ 業務ツール開発 ／ AI活用</div>
+    <h1>「こういうの作れる？」<br>から、始められます。</h1>
+    <p class="lead">ランディングページ、ホームページ、広告バナー、社内で使う業務ツール。仕様が固まっていない段階のご相談も歓迎です。まず小さく形にしてお見せするところから始めるので、「思っていたものと違った」が起きません。</p>
+    <div class="btns">
+      <a href="https://jbrain.space/" target="_blank" rel="noopener" class="btn btn-p"><b>制作を相談する</b><span>初回のご相談は無料です</span></a>
+      <a href="#works" class="btn btn-s"><b>作例を見る</b><span>LP・業務ツール・自動化</span></a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>週15<em>〜25時間</em></b><span>安定して確保できる稼働</span></div>
+      <div class="stat"><b>当日<em>〜翌営業日</em></b><span>ご連絡への返信</span></div>
+      <div class="stat"><b>1名<em>体制</em></b><span>窓口から制作まで同じ人間</span></div>
+      <div class="stat"><b>神奈川</b><span>オンラインで全国対応</span></div>
+    </div>
+  </div>
+</div>
+
+<section class="light">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">ISSUE</div>
+      <h2 class="sec-h2">こんなところで、<br>止まっていませんか。</h2>
+      <p class="sec-sub">外注を考えるときに、実際によく伺うお悩みです。</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="no">01</div><h3>「何を頼めばいいか、うまく言えない」</h3><div class="bar"></div><p>仕様書がなくても大丈夫です。「こういうことがしたい」という言葉から、要件のほうをこちらで整理してご提示します。</p></div>
+      <div class="card"><div class="no">02</div><h3>「出てきたものが、思っていたのと違った」</h3><div class="bar"></div><p>完成してから見せると必ず起きます。最初に小さく作ってお見せし、方向が合ってから作り込むので、大きな手戻りが出ません。</p></div>
+      <div class="card"><div class="no">03</div><h3>「小さな修正のたびに、見積もりを取るのが面倒」</h3><div class="bar"></div><p>編集できる形でお渡しするので、文字や画像の差し替えは御社でできます。触りたくない部分だけご依頼ください。</p></div>
+      <div class="card"><div class="no">04</div><h3>「社内の手作業を、そろそろ仕組みにしたい」</h3><div class="bar"></div><p>Web制作だけでなく、Windowsで動く業務ツールや、毎日自動で回る仕組みの構築も承っています。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="service">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">SERVICE</div>
+      <h2 class="sec-h2">できること</h2>
+      <p class="sec-sub">「作る」だけでなく、公開して運用するところまで自分で手を動かしています。</p>
+    </div>
+    <div class="svc">
+      <div class="svc-i">
+        <div class="ic">🖥</div><h3>LP・ホームページ制作</h3><div class="en">LANDING PAGE / WEBSITE</div>
+        <p>構成の設計から、デザイン、実装まで。編集できるデータでお渡しするので、公開後の更新も御社で回せます。</p>
+        <ul><li>Figma納品</li><li>HTML／CSS実装</li><li>WordPress</li><li>スマホ対応</li></ul>
+      </div>
+      <div class="svc-i">
+        <div class="ic">🎯</div><h3>広告バナー・サムネイル</h3><div class="en">AD CREATIVE</div>
+        <p>Meta広告のバナーやYouTubeのサムネイルを、比率違いまでまとめて。継続でのご依頼にも対応します。</p>
+        <ul><li>Meta広告</li><li>1:1 ／ 4:5 ／ 9:16</li><li>YouTubeサムネイル</li><li>A/B用の差分</li></ul>
+      </div>
+      <div class="svc-i">
+        <div class="ic">⚙️</div><h3>業務ツール・アプリ開発</h3><div class="en">TOOL DEVELOPMENT</div>
+        <p>社内の手作業を減らすツールを作ります。配布できるWindowsアプリの形まで仕上げた実績があります。</p>
+        <ul><li>Windows配布アプリ</li><li>業務自動化</li><li>タスク・顧客管理</li><li>Excel／Access</li></ul>
+      </div>
+      <div class="svc-i">
+        <div class="ic">✍️</div><h3>ライティング</h3><div class="en">WRITING</div>
+        <p>記事、原稿、動画台本。読み手が途中で離脱しない順番の作り方を、書籍と長編台本で積み上げてきました。</p>
+        <ul><li>記事・コラム</li><li>YouTube台本</li><li>書籍（Kindle）</li><li>LPのコピー</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="works" class="light">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">WORKS</div>
+      <h2 class="sec-h2">作例</h2>
+      <p class="sec-sub">実際に手を動かしたものだけを載せています。<br>クライアント様の案件は、掲載のご許可をいただいたもののみ公開しています。</p>
+    </div>
+    <div class="works">
+
+      <a class="work" href="https://www.figma.com/design/xWoVlQWvA3anAe7vVdzF4W" target="_blank" rel="noopener">
+        <div class="work-top">
+          <div class="work-kind">LANDING PAGE</div>
+          <h3>製造業BtoB<br>ランディングページ</h3>
+          <div class="work-note">自主制作の作例（架空の企業）</div>
+        </div>
+        <div class="work-body">
+          <p>金属加工メーカーが新規の取引先を獲得するためのLP。ファーストビューから問い合わせ導線まで11セクションを設計しました。技術力を「高品質」といった形容詞ではなく、公差・材質・納期という数値で示す構成にしています。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>構成設計・コピー・デザイン</span></li>
+            <li><b>制作物</b><span>PC版 11セクション（全10,615px）</span></li>
+            <li><b>ツール</b><span>Figma（日本語レイヤー命名・オートレイアウト）</span></li>
+            <li><b>納品形式</b><span>編集可能なFigmaデータ</span></li>
+          </ul>
+          <div class="work-link">Figmaで実物を見る ↗</div>
+        </div>
+      </a>
+
+      <div class="work">
+        <div class="work-img"><img src="../supplement-banner.jpg" alt="健康食品の広告バナー作例" loading="lazy"></div>
+        <div class="work-cap">
+          <div class="work-kind">AD CREATIVE</div>
+          <h3>健康食品 広告バナー</h3>
+          <div class="work-note">自主制作の作例（架空の商品）</div>
+        </div>
+        <div class="work-body">
+          <p>SNS広告用のバナー作例。商品の説明から入らず、読み手が自分の生活の中で心当たりのある状態から書き出す構成にしています。写真・コピー・レイアウトをまとめて設計し、配信面に合わせて比率違いまで展開できる形で作りました。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>コピー・画像生成・レイアウト・仕上げ</span></li>
+            <li><b>展開</b><span>1:1 ／ 4:5 ／ 9:16 の比率違いに対応</span></li>
+            <li><b>用途</b><span>Meta広告・A/Bテスト用の差分制作</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="work">
+        <div class="work-top">
+          <div class="work-kind">APPLICATION</div>
+          <h3>TaskFlow<br>関係性が見えるタスク管理</h3>
+          <div class="work-note">自社開発</div>
+        </div>
+        <div class="work-body">
+          <p>カンバン型のタスク管理に、社内のナレッジと顧客との関係性を結びつけて可視化するアプリ。「このタスクはどの顧客の、どの経緯から来ているのか」が一目で追えます。担当者の頭の中にしかない繋がりを、画面の上に出すことを目的に作りました。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>企画・設計・開発</span></li>
+            <li><b>機能</b><span>カンバン管理／ナレッジ蓄積／顧客との関係性の可視化</span></li>
+            <li><b>着想</b><span>Trello型の運用で抜け落ちる「文脈」を残す</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="work">
+        <div class="work-top">
+          <div class="work-kind">TOOL DEVELOPMENT</div>
+          <h3>JobLists<br>フォーム営業支援ツール</h3>
+          <div class="work-note">自社製品（企画・開発・配布まで）</div>
+        </div>
+        <div class="work-body">
+          <p>企業の問い合わせフォームへの営業を効率化するWindowsアプリ。企業リストの収集から送信、結果の記録までを一本化しました。自分で使うために作ったものを、配布できる製品の形（インストーラ・手順書つき）まで仕上げています。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>企画・設計・開発・配布物の整備</span></li>
+            <li><b>形態</b><span>Windows実行ファイル＋セットアップ手順書</span></li>
+            <li><b>技術</b><span>Python／ブラウザ自動操作／送信ログ管理</span></li>
+            <li><b>状態</b><span>製品化・実運用まで完了</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <a class="work" href="https://jbrain.space/" target="_blank" rel="noopener">
+        <div class="work-top">
+          <div class="work-kind">WEBSITE</div>
+          <h3>jbrain.space<br>スタジオ公式サイト</h3>
+          <div class="work-note">自社サイト（設計から運用まで）</div>
+        </div>
+        <div class="work-body">
+          <p>自分のスタジオの公式サイト。企画、構成、デザイン、実装、公開後の更新まですべて自分で行っています。ダーク基調で信頼感を出す方向のトーンです。WordPressで運用しており、更新も自分で回しています。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>企画・デザイン・実装・運用</span></li>
+            <li><b>技術</b><span>WordPress（REST API経由での更新も実装）</span></li>
+            <li><b>状態</b><span>公開中・運用継続</span></li>
+          </ul>
+          <div class="work-link">サイトを見る ↗</div>
+        </div>
+      </a>
+
+      <div class="work">
+        <div class="work-top">
+          <div class="work-kind">AUTOMATION</div>
+          <h3>AI自動投稿基盤<br>GitHub Actions × 生成AI</h3>
+          <div class="work-note">自社運用（サーバー費用ゼロ）</div>
+        </div>
+        <div class="work-body">
+          <p>複数アカウントのSNS投稿を、決まった時刻に自動で生成・投稿する仕組み。常時稼働のサーバーを持たず、無料枠の中で毎日動かしています。投稿前に内容を検査するゲートを挟み、規約違反や文字数超過を機械的に止めています。</p>
+          <ul class="work-meta">
+            <li><b>担当</b><span>設計・実装・運用</span></li>
+            <li><b>技術</b><span>GitHub Actions／Python／生成AI API</span></li>
+            <li><b>特徴</b><span>投稿前の自動チェック・失敗時のみ通知</span></li>
+            <li><b>状態</b><span>本番稼働中</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">FLOW</div>
+      <h2 class="sec-h2">進め方</h2>
+      <p class="sec-sub">「完成してから見せる」をやりません。小さく作って、方向を確かめながら進めます。</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="badge">01</div><h3>お話を伺う</h3><div class="dur">30〜60分</div><p>やりたいことを伺って、その場で要件を整理してお返しします。「つまりこういうことですよね」まで詰めます。</p></div>
+      <div class="step"><div class="badge">02</div><h3>小さく作って見せる</h3><div class="dur">数日</div><p>いきなり完成品を目指しません。方向性が分かる最小限のものをお見せして、認識を合わせます。</p></div>
+      <div class="step"><div class="badge">03</div><h3>作り込む</h3><div class="dur">案件による</div><p>方向が固まってから細部に入ります。途中経過も随時お見せするので、途中で軌道修正できます。</p></div>
+      <div class="step"><div class="badge">04</div><h3>納品・その後</h3><div class="dur">—</div><p>編集できるデータでお渡しします。公開後の修正や追加も、同じ窓口で承ります。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">BACKGROUND</div>
+      <h2 class="sec-h2">なぜ、速く作れるのか。</h2>
+      <p class="sec-sub">毎日、自分のプロジェクトでAIを使って制作と運用を回しています。<br>そこで身についたことを、そのままお仕事に持ち込んでいます。</p>
+    </div>
+    <div class="proof">
+      <div class="pf">
+        <b>毎日、動いている</b>
+        <div class="t">実運用でしか分からないこと</div>
+        <p>生成AIを使った制作と自動投稿を、自分のプロジェクトで毎日稼働させています。「試してみた」ではなく、壊れたら自分が困る状態で運用しているので、どこが危ないかを体で知っています。</p>
+      </div>
+      <div class="pf">
+        <b>画像生成を内製</b>
+        <div class="t">外注せずに手元で回す</div>
+        <p>画像生成の環境を自分のPCに構築し、モデルの追加学習まで行っています。1枚ごとの費用がかからないので、納得がいくまで枚数を出して選べます。</p>
+      </div>
+      <div class="pf">
+        <b>作って終わりにしない</b>
+        <div class="t">公開後の数字まで見る</div>
+        <p>制作物を公開したあとの反応を集計する仕組みも自分で組んでいます。「作る人」と「効果を見る人」が分かれていないので、次の一手が早くなります。</p>
+      </div>
+    </div>
+    <div class="disclose">
+      <h3>AIの使い方について、正直にお伝えしています</h3>
+      <p>設計とたたき台の作成にAIを活用し、判断と仕上げは私が行っています。速度を出すための道具として使っているもので、隠す性質のものではないと考えているため、最初にお伝えしています。なお、私が運営しているAIキャラクターのアカウントは、すべて各プラットフォームの規定に沿ってAI生成であることを明示して運用しています。</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="light">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">FAQ</div>
+      <h2 class="sec-h2">よくいただくご質問</h2>
+    </div>
+    <div class="qa">
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>まだ何を作りたいか固まっていないのですが、相談できますか？</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>その段階のご相談がいちばん歓迎です。「こういう困りごとがある」というお話から、何を作るのが早いかをご一緒に決めるところから始めます。要件を整理してお返しするのが得意です。</p></div>
+      </div>
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>納品形式は選べますか？</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>デザインはFigmaでお渡しします。レイヤー名を日本語で整理し、文字量が変わっても崩れない組み方にしてあるので、御社側での差し替えも、コーディング担当の方への引き渡しもそのままできます。HTMLでの実装までご希望の場合も対応します。</p></div>
+      </div>
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>対応できる時間帯を教えてください。</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>平日は早朝5〜7時と20時以降、土日は日中から柔軟に動けます。週15〜25時間を安定して確保しています。日中もメッセージは確認していますので、ご連絡には当日〜翌営業日にお返しします。</p></div>
+      </div>
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>制作にAIを使っていますか？</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>使っています。設計とたたき台の作成に活用し、判断と仕上げは私が行います。隠す性質のものではないと考えているので、最初にお伝えしています。ご懸念がある場合は、どの工程でどう使うかを事前にご説明します。</p></div>
+      </div>
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>秘密保持契約（NDA）は結べますか？</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>はい。ご相談の段階でも締結できます。御社のひな形をお送りいただければ、そちらで対応いたします。実績としての掲載も、ご許可をいただいたもの以外は行いません。</p></div>
+      </div>
+      <div class="qa-i">
+        <div class="qa-r q"><div class="m">Q</div><p>小さい依頼でもお願いできますか？</p></div>
+        <div class="qa-r a"><div class="m">A</div><p>もちろんです。バナー1枚、ページの一部修正、Excelの作業を自動化したい、といったご相談も承っています。まず小さくお試しいただくところから始めていただければと思います。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <div class="sec-label">CONTACT</div>
+    <h2>まず、困っていることを<br>聞かせてください。</h2>
+    <p class="lead">仕様書は要りません。「こういうことがしたい」の一行から始められます。<br>初回のご相談は無料です。お話を伺ったうえで、何をどう作るのがいいかをご提案します。</p>
+    <div class="btns">
+      <a href="https://jbrain.space/" target="_blank" rel="noopener" class="btn btn-p"><b>制作を相談する</b><span>当日〜翌営業日にご返信します</span></a>
+      <a href="../" class="btn btn-s"><b>その他の制作物を見る</b><span>ポートフォリオ全体</span></a>
+    </div>
+    <p class="cta-note">クラウドワークス経由でのご依頼にも対応しています。</p>
+    <footer>
+      <div class="ft">
+        <div class="ft-l">
+          <b>JYUMARU</b>
+          <p>塩島 努（屋号：JYUMARU）／ 神奈川エリア・オンラインで全国対応</p>
+        </div>
+        <div class="ft-r">
+          © 2026 JYUMARU
+          <a href="https://jbrain.space/" target="_blank" rel="noopener">公式サイト ↗</a>
+          <a href="../">ポートフォリオ</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+</body>
+</html>
