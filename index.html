@@ -3,1209 +3,994 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>祠堂じゅまる — Producer &amp; Writer / JYUMARU AI Character Studio</title>
-<link rel="icon" href="favicon.png" type="image/png">
+<title>JYUMARU｜Web制作・業務ツール開発・AIクリエイティブ</title>
+<meta name="description" content="LP・ホームページ・広告バナー・業務ツール・AIを使ったビジュアル制作。仕様書がない段階から、まず小さく作ってお見せします。祠堂じゅまる（JYUMARU）／神奈川・オンラインで全国対応。">
+<link rel="icon" href="favicon.png">
+<meta property="og:title" content="JYUMARU｜Web制作・業務ツール開発・AIクリエイティブ">
+<meta property="og:description" content="「こういうの作れる？」から、始められます。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://jyumaru.github.io/portfolio/characters-sheet.jpg">
+<meta name="theme-color" content="#0f1116">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:      #faf9f6;
-    --bg2:     #f2f0eb;
-    --bg3:     #e8e5de;
-    --dark:    #16140f;
-    --dark2:   #2e2b24;
-    --muted:   #8c897f;
-    --muted2:  #b5b1a7;
-    --gold:    #a0783a;
-    --gold2:   #c9a464;
-    --border:  rgba(22,20,15,0.10);
-    --border2: rgba(22,20,15,0.06);
-    --pad:     clamp(32px, 5vw, 96px);
-    --max:     1440px;
-  }
+/* ============================================================
+   JYUMARU  —  墨 × 生成り × 金
+   構造は罫線で作る。箱で囲わない。中央寄せにしない。
+   ============================================================ */
+:root{
+  --ink:#0f1116; --ink-2:#161920; --ink-3:#1d212a;
+  --paper:#f7f4ee; --paper-2:#efeae0;
+  --gold:#a0783a; --gold-l:#c9a464;
+  --txt:#13161c; --txt-m:#5d6068; --txt-f:#8b8d94;
+  --w:#f2efe9; --w-m:rgba(242,239,233,.60); --w-f:rgba(242,239,233,.38);
+  --rd:rgba(15,17,22,.13); --rd2:rgba(15,17,22,.07);
+  --rl:rgba(242,239,233,.15); --rl2:rgba(242,239,233,.07);
+  --gut:clamp(20px,5.2vw,80px); --max:1340px;
+  --sans:"Outfit","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium",YuGothic,"Meiryo",sans-serif;
+  --disp:"Cormorant Garamond","Zen Old Mincho","Yu Mincho",YuMincho,"Hiragino Mincho ProN",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--paper);color:var(--txt);
+  font-size:15px;line-height:2.02;letter-spacing:.012em;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+::selection{background:var(--gold);color:#fff}
+body::after{
+  content:"";position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.ink{background:var(--ink);color:var(--w)}
+.ink h1,.ink h2,.ink h3,.ink b{color:var(--w)}
+section{position:relative}
+.pad{padding:clamp(76px,11vw,148px) 0}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--dark);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
+.seal{display:block;width:1em;height:1em;flex:none}
+.seal circle,.seal path{fill:none;stroke:currentColor;stroke-width:1.05;vector-effect:non-scaling-stroke}
 
-  /* ── カーソル ── */
-  #cursor { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; }
-  #cursor .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--dark);
-    position: absolute; transform: translate(-50%,-50%);
-    transition: background .3s;
-  }
-  #cursor .ring {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 1.5px solid rgba(22,20,15,0.35);
-    position: absolute; transform: translate(-50%,-50%);
-    transition: width .3s, height .3s, border-color .3s;
-  }
-  body.hovering #cursor .ring { width: 54px; height: 54px; border-color: var(--gold); }
-  body.hovering #cursor .dot  { background: var(--gold); }
-  body.cursor-invert #cursor .dot  { background: #faf9f6; }
-  body.cursor-invert #cursor .ring { border-color: rgba(250,249,246,0.5); }
-  body.cursor-invert.hovering #cursor .dot  { background: var(--gold2); }
-  body.cursor-invert.hovering #cursor .ring { border-color: var(--gold2); }
+/* ── タイポ ───────────────────────────────── */
+.disp{font-family:var(--disp);font-weight:600;letter-spacing:.005em;font-feature-settings:"palt" 1}
+/* 和文は文節で折る（対応ブラウザのみ・非対応でも従来どおり） */
+h1,h2,h3,.wk-t,.ab-t b,.prf b,.hero-l,.sh-p{word-break:auto-phrase;line-break:strict}
+.lb{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:11px}
+.lb-ja{letter-spacing:.1em;text-transform:none;font-size:10.5px}
+.lb::before{content:"";width:22px;height:1px;background:var(--gold);flex:none}
+.ink .lb{color:var(--gold-l)}
+.ink .lb::before{background:var(--gold-l)}
+.en{font-family:var(--disp);font-style:italic;font-weight:300;letter-spacing:.03em;color:var(--txt-f);font-size:clamp(15px,2.1vw,20px);line-height:1.5}
+.ink .en{color:var(--w-f)}
 
-  /* ── Nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-    padding: 30px var(--pad);
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background .5s, padding .4s, box-shadow .4s;
-  }
-  nav.scrolled {
-    background: rgba(250,249,246,0.92);
-    backdrop-filter: blur(14px);
-    padding: 18px var(--pad);
-    box-shadow: 0 1px 0 var(--border);
-  }
-  nav > * { max-width: calc(var(--max) - var(--pad) * 2); }
-  .nav-inner {
-    width: 100%; max-width: var(--max);
-    margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 21px; font-weight: 400; letter-spacing: 0.1em;
-    color: var(--dark); text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 48px; list-style: none; }
-  .nav-links a {
-    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none; position: relative;
-    transition: color .3s;
-  }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -3px; left: 0;
-    width: 0; height: 1px; background: var(--gold); transition: width .35s;
-  }
-  .nav-links a:hover { color: var(--dark); }
-  .nav-links a:hover::after { width: 100%; }
+/* ── 進行バー・カーソル・左レール ─────────────── */
+#prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:120;background:var(--gold);transform:scaleX(0);transform-origin:0 50%}
+#cur{position:fixed;top:0;left:0;z-index:200;pointer-events:none;display:none;mix-blend-mode:difference}
+#cur .r{position:absolute;width:32px;height:32px;margin:-16px 0 0 -16px;border:1px solid rgba(201,164,100,.9);border-radius:50%;transition:width .3s var(--ease),height .3s var(--ease),margin .3s var(--ease)}
+#cur .d{position:absolute;width:4px;height:4px;margin:-2px 0 0 -2px;border-radius:50%;background:var(--gold-l)}
+body.hov #cur .r{width:56px;height:56px;margin:-28px 0 0 -28px}
+@media (hover:hover) and (pointer:fine){#cur{display:block}}
 
-  /* ── Hero ── */
-  #hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 0 var(--pad); position: relative; overflow: hidden;
-    background: var(--bg);
-  }
-  /* 背景 geometric */
-  .hero-geo {
-    position: absolute; top: 0; right: 0; width: 50%; height: 100%;
-    background: var(--bg2); clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
-    z-index: 0;
-  }
-  .hero-geo::after {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg, transparent, transparent 40px,
-      rgba(22,20,15,0.025) 40px, rgba(22,20,15,0.025) 41px
-    );
-  }
-  /* 縦ライン装飾 */
-  .hero-vline {
-    position: absolute; top: 15%; right: calc(50% - 1px);
-    width: 1px; height: 70%;
-    background: linear-gradient(to bottom, transparent, var(--gold2), transparent);
-    opacity: 0.4; z-index: 1;
-    animation: vpulse 5s ease-in-out infinite;
-  }
-  @keyframes vpulse { 0%,100%{opacity:.15;transform:scaleY(.8)} 50%{opacity:.5;transform:scaleY(1)} }
+#rail{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:60;display:none;flex-direction:column;gap:20px}
+#rail a{writing-mode:vertical-rl;font-size:9px;letter-spacing:.34em;text-transform:uppercase;color:var(--txt-f);display:flex;align-items:center;gap:9px;transition:color .3s}
+#rail a::before{content:"";width:5px;height:5px;border-radius:50%;border:1px solid currentColor;flex:none;transition:.3s}
+#rail a.on{color:var(--gold)}
+#rail a.on::before{background:var(--gold);border-color:var(--gold)}
+body.on-ink #rail a{color:var(--w-f)}
+body.on-ink #rail a.on{color:var(--gold-l)}
+body.on-ink #rail a.on::before{background:var(--gold-l);border-color:var(--gold-l)}
+@media(min-width:1200px){#rail{display:flex}}
 
-  .hero-content { position: relative; z-index: 2; max-width: 640px; }
-  .hero-label {
-    font-size: clamp(10px, 1vw, 12px); letter-spacing: 0.32em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 40px;
-    display: flex; align-items: center; gap: 16px;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp .9s ease forwards .3s;
-  }
-  .hero-label::before { content: ''; width: 36px; height: 1px; background: var(--gold); }
+/* ── ヘッダー ─────────────────────────────── */
+header{position:sticky;top:0;z-index:100;background:rgba(15,17,22,.9);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid var(--rl2)}
+.hd{display:flex;align-items:center;gap:clamp(14px,3vw,40px);height:66px}
+.hd-m{display:flex;align-items:center;gap:11px;color:var(--w)}
+.hd-m .seal{font-size:19px;color:var(--gold-l)}
+.hd-m b{font-family:var(--disp);font-size:18px;font-weight:500;letter-spacing:.2em;line-height:1}
+.hd-n{margin-left:auto;display:flex;gap:clamp(16px,2.2vw,32px)}
+.hd-n a{font-size:12.5px;color:var(--w-m);letter-spacing:.06em;position:relative;padding:4px 0}
+.hd-n a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold-l);transition:width .4s var(--ease)}
+.hd-n a:hover{color:var(--w)}
+.hd-n a:hover::after{width:100%}
+.hd-c{margin-left:auto;font-size:12.5px;letter-spacing:.06em;color:var(--w);border:1px solid var(--rl);padding:10px 18px;transition:.35s var(--ease);white-space:nowrap}
+.hd-n+.hd-c{margin-left:0}
+.hd-c:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+@media(max-width:960px){.hd-n{display:none}.hd-c{padding:9px 14px;font-size:12px}}
 
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(46px, 6.2vw, 92px);
-    font-weight: 300; line-height: 0.98; letter-spacing: -0.02em;
-  }
-  .hero-title .line { display: block; overflow: hidden; }
-  .hero-title .line span {
-    display: block; transform: translateY(110%);
-    animation: slideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
-  }
-  .hero-title .line:nth-child(1) span { animation-delay: .5s; }
-  .hero-title .line:nth-child(2) span { animation-delay: .62s; }
-  .hero-title .line:nth-child(3) span { animation-delay: .74s; }
-  .hero-title .line:nth-child(4) span { animation-delay: .86s; color: var(--gold); font-style: italic; }
+/* ── ヒーロー ─────────────────────────────── */
+.hero{background:var(--ink);color:var(--w);position:relative;overflow:hidden;padding:clamp(72px,13vw,150px) 0 clamp(56px,8vw,104px)}
+.hero-g{position:absolute;inset:0;max-width:var(--max);margin:0 auto;padding:0 var(--gut);display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none;opacity:.6}
+.hero-g i{border-left:1px solid var(--rl2)}
+.hero-g i:first-child{border-left:0}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(880px 520px at 78% 8%,rgba(160,120,58,.17),transparent 64%)}
+.hero .wrap{position:relative;z-index:2}
+.hero-k{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.hero-k .en{color:var(--gold-l);font-size:clamp(16px,2.4vw,23px)}
+h1.hero-t{font-family:var(--disp);font-weight:700;font-size:clamp(34px,8.4vw,92px);line-height:1.3;letter-spacing:-.005em;margin-top:clamp(22px,3.4vw,38px);font-feature-settings:"palt" 1}
+h1.hero-t .q{color:var(--gold-l)}
+.hero-l{max-width:648px;margin-top:clamp(26px,3.6vw,40px);color:var(--w-m);font-size:clamp(13.5px,1.6vw,15.5px);line-height:2.15}
+.hero-a{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(30px,4vw,44px)}
+.act{display:inline-flex;align-items:center;gap:14px;padding:17px 26px;border:1px solid var(--rl);position:relative;overflow:hidden;transition:color .4s var(--ease),border-color .4s var(--ease)}
+.act span{position:relative;z-index:1;font-size:14px;letter-spacing:.05em;font-weight:500}
+.act small{position:relative;z-index:1;font-size:10.5px;letter-spacing:.09em;color:var(--w-f);font-family:var(--disp);font-style:italic}
+.act::before{content:"";position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:0 50%;transition:transform .55s var(--ease)}
+.act:hover{border-color:var(--gold);color:#fff}
+.act:hover::before{transform:scaleX(1)}
+.act:hover small{color:rgba(255,255,255,.75)}
+.act-p{border-color:var(--gold-l)}
+.act-p::before{transform:scaleX(1)}
+.act-p span,.act-p small{color:#fff}
+.act-p:hover::before{background:var(--gold-l)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(42px,6vw,74px);border-top:1px solid var(--rl)}
+.facts li{padding:clamp(20px,2.6vw,28px) clamp(12px,1.8vw,24px) 0;border-left:1px solid var(--rl2)}
+.facts li:first-child{border-left:0;padding-left:0}
+.facts b{display:block;font-family:var(--disp);font-weight:400;font-size:clamp(23px,3.4vw,38px);line-height:1.15;letter-spacing:.01em;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.facts b em{font-style:normal;font-family:var(--sans);font-size:12px;font-weight:400;color:var(--w-m);margin-left:6px;letter-spacing:.04em}
+.facts span{display:block;font-size:10.5px;letter-spacing:.13em;color:var(--w-f);margin-top:10px;line-height:1.7}
+@media(max-width:720px){
+  .facts{grid-template-columns:1fr 1fr}
+  .facts li{padding:18px 0 18px 18px;border-left:1px solid var(--rl2)}
+  .facts li:nth-child(2n+1){border-left:0;padding-left:0}
+  .facts li:nth-child(n+3){border-top:1px solid var(--rl2)}
+}
+.hero-s{position:absolute;right:calc(var(--gut) * -.35);bottom:-8%;font-size:clamp(260px,34vw,520px);color:var(--gold);opacity:.055;z-index:1;pointer-events:none}
 
-  .hero-desc {
-    margin-top: 36px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.85;
-    color: var(--muted); max-width: 480px;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp .9s ease forwards 1.2s;
-  }
-  .hero-cta {
-    margin-top: 48px; display: flex; gap: 20px; align-items: center;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp .9s ease forwards 1.5s;
-  }
-  .btn-primary {
-    padding: 14px 36px; font-size: 11px; letter-spacing: 0.22em;
-    text-transform: uppercase; text-decoration: none;
-    color: #fff; background: var(--dark);
-    border: 1.5px solid var(--dark); cursor: none;
-    transition: background .3s, color .3s; display: inline-block;
-  }
-  .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
-  .btn-outline {
-    padding: 14px 36px; font-size: 11px; letter-spacing: 0.22em;
-    text-transform: uppercase; text-decoration: none;
-    color: var(--dark); border: 1.5px solid var(--border2);
-    cursor: none; transition: border-color .3s, color .3s; display: inline-block;
-    border-color: rgba(22,20,15,0.2);
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+/* ── 流れる帯 ─────────────────────────────── */
+.mq{background:var(--ink);border-top:1px solid var(--rl2);border-bottom:1px solid var(--rl2);overflow:hidden;padding:17px 0}
+.mq-in{display:flex;width:max-content;animation:mq 52s linear infinite}
+.mq-in>div{display:flex;align-items:center}
+.mq span{font-family:var(--disp);font-style:italic;font-weight:300;font-size:clamp(16px,2.3vw,25px);color:var(--w-f);white-space:nowrap;letter-spacing:.05em}
+.mq .seal{font-size:11px;color:var(--gold);margin:0 clamp(22px,3.6vw,46px)}
+@keyframes mq{to{transform:translateX(-50%)}}
 
-  .scroll-hint {
-    position: absolute; bottom: 48px; left: var(--pad);
-    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--muted2); display: flex; align-items: center; gap: 14px;
-    opacity: 0; animation: fadeUp 1s ease forwards 2s;
-  }
-  .scroll-hint::before {
-    content: ''; width: 1px; height: 44px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollLine 2s ease-in-out infinite 2.5s;
-  }
-  @keyframes scrollLine { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.55)} }
+/* ── セクション見出し ───────────────────────── */
+.sh{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,2vw,26px);align-items:start;margin-bottom:clamp(44px,6.4vw,84px)}
+.sh-l{grid-column:1/4;display:flex;flex-direction:column;gap:15px;padding-top:10px}
+.sh-h{grid-column:4/13;font-size:clamp(27px,5.4vw,58px);line-height:1.38;font-weight:700;letter-spacing:-.005em;font-feature-settings:"palt" 1}
+.sh-p{grid-column:4/11;color:var(--txt-m);font-size:clamp(13px,1.5vw,14.5px);line-height:2.15;margin-top:clamp(16px,2vw,26px)}
+.ink .sh-p{color:var(--w-m)}
+@media(max-width:860px){
+  .sh{grid-template-columns:1fr;gap:16px;margin-bottom:40px}
+  .sh-l,.sh-h,.sh-p{grid-column:1/-1}
+  .sh-p{margin-top:2px}
+}
 
-  /* ── 共通 ── */
-  section { padding: clamp(80px, 8vw, 130px) var(--pad); }
-  .section-inner { max-width: var(--max); margin: 0 auto; }
-  .section-label {
-    font-size: clamp(10px, 1vw, 12px); letter-spacing: 0.32em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 20px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 4.5vw, 68px); font-weight: 300;
-    line-height: 1.06; letter-spacing: -0.01em; color: var(--dark);
-  }
-  .section-title em { font-style: italic; color: var(--gold); }
+/* ── 罫線リスト ───────────────────────────── */
+.rows{border-top:1px solid var(--rd)}
+.ink .rows{border-color:var(--rl)}
+.row{display:grid;grid-template-columns:clamp(58px,7vw,104px) 1fr;gap:clamp(10px,2vw,24px);border-bottom:1px solid var(--rd);padding:clamp(26px,3.6vw,44px) 0;position:relative}
+.ink .row{border-color:var(--rl)}
+.row::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(160,120,58,.07),transparent 62%);opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
+.row:hover::before{opacity:1}
+.row-n{font-family:var(--disp);font-weight:300;font-size:clamp(26px,3.4vw,40px);line-height:1;color:var(--gold);padding-top:4px;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.ink .row-n{color:var(--gold-l)}
+.row-c{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.28fr);gap:clamp(12px,3vw,54px);align-items:start}
+.row-c h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.3vw,25px);line-height:1.62;letter-spacing:.005em;font-feature-settings:"palt" 1}
+.row-en{display:block;font-family:var(--disp);font-style:italic;font-weight:300;font-size:12.5px;letter-spacing:.1em;color:var(--txt-f);margin-top:9px}
+.ink .row-en{color:var(--w-f)}
+.row-c p{color:var(--txt-m);font-size:clamp(12.5px,1.4vw,14px);line-height:2.12}
+.ink .row-c p{color:var(--w-m)}
+.tags{margin-top:15px;font-size:11.5px;letter-spacing:.06em;color:var(--txt-f);line-height:2.1}
+.tags i{font-style:normal;color:var(--gold);margin:0 8px;opacity:.6}
+@media(max-width:820px){
+  .row{grid-template-columns:clamp(42px,10vw,58px) 1fr;gap:10px}
+  .row-c{grid-template-columns:1fr;gap:12px}
+}
 
-  .reveal {
-    opacity: 0; transform: translateY(36px);
-    transition: opacity .9s ease, transform .9s cubic-bezier(0.16,1,0.3,1);
-  }
-  .reveal.visible { opacity: 1; transform: none; }
-  .reveal-delay-1 { transition-delay: .1s; }
-  .reveal-delay-2 { transition-delay: .2s; }
-  .reveal-delay-3 { transition-delay: .3s; }
-  .reveal-delay-4 { transition-delay: .4s; }
+/* ── 作例（索引＋開閉）────────────────────── */
+.filt{display:flex;flex-wrap:wrap;gap:clamp(14px,2.6vw,34px);margin-bottom:clamp(26px,3.4vw,40px);align-items:center}
+.filt button{font-size:12px;letter-spacing:.1em;color:var(--w-f);padding:7px 0;position:relative;transition:color .35s}
+.filt button::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold-l);transition:width .45s var(--ease)}
+.filt button:hover{color:var(--w-m)}
+.filt button.on{color:var(--gold-l)}
+.filt button.on::after{width:100%}
+.filt button i{font-style:normal;font-family:var(--disp);font-size:10.5px;margin-left:7px;opacity:.6;font-variant-numeric:lining-nums}
+.wx{border-top:1px solid var(--rl)}
+.wk{border-bottom:1px solid var(--rl)}
+.wk[hidden]{display:none}
+.wk-hd{display:grid;grid-template-columns:clamp(54px,6.4vw,92px) 1fr auto 30px;gap:clamp(10px,2vw,22px);align-items:center;width:100%;padding:clamp(20px,2.8vw,32px) 0;transition:opacity .4s}
+.wk-hd:hover{opacity:.72}
+.wk-n{font-family:var(--disp);font-weight:300;font-size:clamp(21px,2.7vw,31px);color:var(--gold-l);line-height:1;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.wk-t{font-family:var(--disp);font-weight:600;font-size:clamp(16.5px,2.5vw,28px);line-height:1.45;letter-spacing:.005em;font-feature-settings:"palt" 1;color:var(--w)}
+.wk-k{font-family:var(--disp);font-style:italic;font-weight:300;font-size:clamp(12px,1.5vw,16px);letter-spacing:.09em;color:var(--w-f);white-space:nowrap}
+.wk-x{position:relative;width:22px;height:22px;justify-self:end}
+.wk-x::before,.wk-x::after{content:"";position:absolute;left:50%;top:50%;background:var(--gold-l);transition:transform .5s var(--ease)}
+.wk-x::before{width:15px;height:1px;margin:0 0 0 -7.5px}
+.wk-x::after{width:1px;height:15px;margin:-7.5px 0 0 0}
+.wk.on .wk-x::after{transform:rotate(90deg)}
+.wk-bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s var(--ease)}
+.wk.on .wk-bd{grid-template-rows:1fr}
+.wk-ov{overflow:hidden}
+.wk-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(22px,4vw,58px);padding:0 0 clamp(34px,4.4vw,52px);opacity:0;transform:translateY(14px);transition:opacity .6s .12s var(--ease),transform .6s .12s var(--ease)}
+.wk.on .wk-in{opacity:1;transform:none}
+@media(max-width:900px){
+  .wk-hd{grid-template-columns:clamp(40px,9vw,56px) minmax(0,1fr) 26px;row-gap:5px;align-items:start}
+  .wk-n{grid-column:1;grid-row:1}
+  .wk-t{grid-column:2;grid-row:1}
+  .wk-k{grid-column:2;grid-row:2;white-space:normal}
+  .wk-x{grid-column:3;grid-row:1/3;align-self:center}
+  .wk-in{grid-template-columns:1fr}
+}
+.wk-v{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--ink-2);border:1px solid var(--rl2)}
+.wk-v img{width:100%;height:100%;object-fit:cover;filter:saturate(.94)}
+/* 縦長の制作物（バナー・書影・カード）は切らずに全体を見せる */
+.wk-v.fit img{object-fit:contain;padding:clamp(12px,2vw,22px);filter:none}
+.tp{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,3vw,34px);background:linear-gradient(150deg,var(--ink-3),var(--ink-2) 62%)}
+.tp::before{content:"";position:absolute;right:-14%;bottom:-32%;width:60%;aspect-ratio:1;border:1px solid rgba(201,164,100,.16);border-radius:50%}
+.tp::after{content:"";position:absolute;right:-2%;bottom:-14%;width:34%;aspect-ratio:1;border:1px solid rgba(201,164,100,.11);border-radius:50%}
+.tp-en{position:relative;font-family:var(--disp);font-weight:400;font-size:clamp(28px,4.4vw,52px);line-height:1.08;color:var(--w);letter-spacing:-.01em}
+.tp-en em{display:block;font-style:italic;font-weight:300;color:var(--gold-l)}
+.tp-b{position:relative;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.2em;color:var(--w-f)}
+.tp-b::before{content:"";width:26px;height:1px;background:var(--gold-l);flex:none}
+.wk-note{display:inline-flex;align-items:center;gap:9px;font-size:10.5px;letter-spacing:.11em;color:var(--gold-l);border:1px solid rgba(201,164,100,.34);padding:6px 13px}
+.wk-c p{margin-top:18px;color:var(--w-m);font-size:clamp(12.5px,1.4vw,14px);line-height:2.15}
+.wk-dl{margin-top:24px;border-top:1px solid var(--rl2)}
+.wk-dl div{display:grid;grid-template-columns:clamp(62px,7vw,86px) 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--rl2);font-size:12px;line-height:1.85}
+.wk-dl dt{color:var(--w-f);letter-spacing:.1em}
+.wk-dl dd{color:var(--w-m)}
+.wk-go{display:inline-flex;align-items:center;gap:10px;margin-top:20px;margin-right:20px;font-size:12.5px;letter-spacing:.08em;color:var(--gold-l);border-bottom:1px solid rgba(201,164,100,.4);padding-bottom:5px;transition:gap .4s var(--ease)}
+.wk-go:hover{gap:18px}
 
-  /* ── About ── */
-  #about { background: var(--bg); }
-  .about-grid {
-    display: grid; grid-template-columns: 5fr 7fr;
-    gap: clamp(48px, 6vw, 96px); align-items: center; margin-top: 64px;
-  }
-  .about-photo {
-    aspect-ratio: 4/5; background: var(--bg2);
-    border: 1px solid var(--border); position: relative; overflow: hidden;
-  }
-  .about-photo::before {
-    content: ''; position: absolute; bottom: -20px; right: -20px;
-    width: 50%; height: 50%; border: 1px solid rgba(160,120,58,0.2);
-    z-index: 0;
-  }
-  .photo-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 12px;
-    color: var(--muted2); font-size: 12px; letter-spacing: 0.12em;
-    position: relative; z-index: 1;
-  }
-  .photo-placeholder svg { width: 44px; height: 44px; opacity: 0.35; }
+/* ── 進め方 ───────────────────────────────── */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2.4vw,34px);position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:11px;height:1px;background:linear-gradient(90deg,var(--gold),var(--rd) 78%,transparent)}
+.tl li{position:relative;padding-top:44px}
+.tl li::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;border-radius:50%;background:var(--paper);border:1px solid var(--gold)}
+.tl li.done::before{background:var(--gold)}
+.tl-n{font-family:var(--disp);font-weight:300;font-size:clamp(30px,4vw,48px);line-height:1;color:var(--gold);font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.tl h3{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.1vw,23px);margin-top:14px;line-height:1.5;font-feature-settings:"palt" 1}
+.tl .dur{display:block;font-family:var(--disp);font-style:italic;font-size:12.5px;color:var(--txt-f);margin-top:7px;letter-spacing:.06em}
+.tl p{margin-top:15px;font-size:12.5px;line-height:2.05;color:var(--txt-m)}
+@media(max-width:820px){
+  .tl{grid-template-columns:1fr;gap:0}
+  .tl::before{left:5px;right:auto;top:6px;bottom:24px;width:1px;height:auto;background:linear-gradient(180deg,var(--gold),var(--rd) 84%,transparent)}
+  .tl li{padding:22px 0 22px 30px}
+  .tl li::before{top:28px}
+  .tl h3{margin-top:8px}
+}
 
-  .about-text p { font-size: clamp(15px, 1.3vw, 18px); line-height: 1.9; color: var(--muted); margin-bottom: 22px; }
-  .about-text p strong { color: var(--dark); font-weight: 400; }
-  .about-stats {
-    display: flex; gap: clamp(32px, 4vw, 52px); margin-top: 48px;
-    padding-top: 40px; border-top: 1px solid var(--border);
-  }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(44px, 4vw, 62px); font-weight: 300; color: var(--dark);
-    line-height: 1; display: block;
-  }
-  .stat-label { font-size: clamp(10px, 1vw, 12px); letter-spacing: 0.15em; color: var(--muted2); text-transform: uppercase; margin-top: 6px; }
+/* ── About ────────────────────────────────── */
+.ab{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(26px,4.6vw,72px);align-items:start}
+.ab-v{aspect-ratio:4/5;overflow:hidden;border:1px solid var(--rl2);background:var(--ink-2)}
+.ab-v img{width:100%;height:100%;object-fit:cover}
+.ab-t p{color:var(--w-m);font-size:clamp(13px,1.5vw,14.5px);line-height:2.2}
+.ab-t p+p{margin-top:18px}
+.ab-t b{display:block;font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.6vw,28px);line-height:1.55;margin-bottom:20px;font-feature-settings:"palt" 1}
+.ab-s{display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(28px,3.4vw,40px);border-top:1px solid var(--rl)}
+.ab-s li{padding:20px 14px 0;border-left:1px solid var(--rl2)}
+.ab-s li:first-child{border-left:0;padding-left:0}
+.ab-s b{display:block;font-family:var(--disp);font-weight:400;font-size:clamp(22px,3vw,34px);line-height:1.1;color:var(--w);font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1}
+.ab-s span{display:block;font-size:10.5px;letter-spacing:.11em;color:var(--w-f);margin-top:9px;line-height:1.7}
+@media(max-width:860px){.ab{grid-template-columns:1fr}.ab-v{aspect-ratio:3/2}.ab-s{grid-template-columns:1fr 1fr}.ab-s li{padding:16px 0 16px 16px;border-left:1px solid var(--rl2)}.ab-s li:nth-child(2n+1){border-left:0;padding-left:0}.ab-s li:nth-child(n+3){border-top:1px solid var(--rl2)}}
 
-  /* ── Skills ── */
-  #skills { background: var(--bg2); }
-  .skills-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 1px; margin-top: 72px; background: var(--border);
-  }
-  .skill-card {
-    padding: clamp(32px, 3vw, 52px) clamp(24px, 2.5vw, 44px);
-    background: var(--bg); position: relative; overflow: hidden; cursor: none;
-    transition: background .3s;
-  }
-  .skill-card:hover { background: var(--bg2); }
-  .skill-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 2px; background: var(--gold);
-    transition: width .5s ease;
-  }
-  .skill-card:hover::after { width: 100%; }
-  .skill-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(12px, 1.1vw, 14px); color: var(--gold); letter-spacing: 0.2em; margin-bottom: 24px; display: block;
-  }
-  .skill-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(20px, 2vw, 28px); font-weight: 400; margin-bottom: 12px; color: var(--dark);
-  }
-  .skill-desc { font-size: clamp(13px, 1.1vw, 15px); line-height: 1.8; color: var(--muted); }
-  .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
-  .tag {
-    font-size: clamp(9px, 0.9vw, 11px); letter-spacing: 0.12em; padding: 4px 10px;
-    border: 1px solid var(--border); color: var(--muted);
-    text-transform: uppercase; background: var(--bg2);
-  }
+.prf{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rl);margin-top:clamp(48px,6vw,80px)}
+.prf>div{padding:clamp(28px,3.4vw,42px) clamp(16px,2.4vw,34px) 0;border-left:1px solid var(--rl2)}
+.prf>div:first-child{border-left:0;padding-left:0}
+.prf .en{display:block;font-size:14.5px;color:var(--gold-l)}
+.prf b{display:block;font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.6vw,29px);line-height:1.5;margin-top:12px;font-feature-settings:"palt" 1}
+.prf p{margin-top:16px;font-size:12.5px;line-height:2.12;color:var(--w-m)}
+@media(max-width:820px){.prf{grid-template-columns:1fr}.prf>div{border-left:0;padding:26px 0;border-bottom:1px solid var(--rl2)}.prf>div:last-child{border-bottom:0}}
+.disc{margin-top:clamp(42px,5.6vw,70px);border-top:1px solid rgba(201,164,100,.4);padding-top:clamp(24px,3vw,34px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:clamp(18px,3.6vw,52px)}
+.disc h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.2vw,24px);line-height:1.6;font-feature-settings:"palt" 1;margin-top:14px}
+.disc p{font-size:12.5px;line-height:2.2;color:var(--w-m)}
+.disc p+p{margin-top:13px}
+@media(max-width:820px){.disc{grid-template-columns:1fr;gap:16px}}
 
-  /* ── Services ── */
-  #services { background: var(--bg); }
-  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 72px; background: var(--border); }
-  .service-card {
-    padding: clamp(36px, 3.2vw, 56px) clamp(26px, 2.6vw, 46px);
-    background: var(--bg2); display: flex; flex-direction: column;
-    position: relative; overflow: hidden; transition: background .3s;
-  }
-  .service-card:hover { background: var(--bg3); }
-  .service-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 2px; background: var(--gold); transition: width .5s ease;
-  }
-  .service-card:hover::after { width: 100%; }
-  .service-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(12px, 1.1vw, 14px); color: var(--gold);
-    letter-spacing: 0.2em; margin-bottom: 24px; display: block;
-  }
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(21px, 2vw, 30px); font-weight: 400; color: var(--dark); margin-bottom: 14px;
-  }
-  .service-name small {
-    display: block; font-family: 'Outfit', sans-serif; font-size: 10px;
-    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-top: 8px;
-  }
-  .service-desc { font-size: clamp(13px, 1.1vw, 15px); line-height: 1.8; color: var(--muted); margin-bottom: 22px; }
-  .service-note { font-size: clamp(11px, 1vw, 12.5px); line-height: 1.7; color: var(--muted2); margin-bottom: 28px; }
-  .service-cta {
-    margin-top: auto; align-self: flex-start; font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--dark); text-decoration: none;
-    border-bottom: 1px solid var(--gold); padding-bottom: 4px; cursor: none; transition: color .3s;
-  }
-  .service-card:hover .service-cta { color: var(--gold); }
-  .services-pricing-note { font-size: clamp(12px, 1vw, 13.5px); line-height: 1.8; color: var(--muted2); max-width: 720px; margin-top: 36px; }
+/* ── Q&A ─────────────────────────────────── */
+.qa{border-top:1px solid var(--rd)}
+.qi{border-bottom:1px solid var(--rd)}
+.qh{display:grid;grid-template-columns:26px 1fr 22px;gap:clamp(12px,2vw,22px);align-items:start;width:100%;padding:clamp(20px,2.6vw,28px) 0;transition:opacity .4s}
+.qh:hover{opacity:.7}
+.qm{font-family:var(--disp);font-size:20px;font-weight:400;color:var(--gold);line-height:1.4}
+.qh h3{font-family:var(--disp);font-weight:600;font-size:clamp(15px,2vw,20px);line-height:1.65;font-feature-settings:"palt" 1}
+.qx{position:relative;width:22px;height:22px;margin-top:4px}
+.qx::before,.qx::after{content:"";position:absolute;left:50%;top:50%;background:var(--gold);transition:transform .5s var(--ease)}
+.qx::before{width:13px;height:1px;margin:0 0 0 -6.5px}
+.qx::after{width:1px;height:13px;margin:-6.5px 0 0 0}
+.qi.on .qx::after{transform:rotate(90deg)}
+.qb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.qi.on .qb{grid-template-rows:1fr}
+.qb>div{overflow:hidden}
+.qin{display:grid;grid-template-columns:26px 1fr;gap:clamp(12px,2vw,22px);padding:0 0 clamp(24px,3vw,30px);max-width:920px}
+.qin .qm{font-size:18px;color:var(--txt-f)}
+.qin p{font-size:12.5px;line-height:2.2;color:var(--txt-m)}
 
-  /* ── section lead / 事例カード拡張 ── */
-  .works-lead { font-size: clamp(14px, 1.2vw, 17px); line-height: 1.85; color: var(--muted); max-width: 680px; margin-top: 28px; }
-  .work-ov-line { font-size: clamp(12px, 1vw, 13.5px); line-height: 1.65; color: var(--muted); margin: 8px 0; }
-  .work-ov-line strong { color: var(--dark); font-weight: 500; }
-  .work-ai-note { margin-top: 14px; font-size: 10px; letter-spacing: 0.04em; color: var(--muted2); line-height: 1.5; }
+/* ── CTA・フッター ─────────────────────────── */
+.cta{background:var(--ink);color:var(--w);position:relative;overflow:hidden;padding:clamp(76px,11vw,140px) 0 0}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(760px 460px at 22% 100%,rgba(160,120,58,.17),transparent 66%)}
+.cta .wrap{position:relative;z-index:1}
+.cta h2{font-family:var(--disp);font-weight:700;font-size:clamp(29px,6.6vw,72px);line-height:1.34;margin-top:26px;letter-spacing:-.005em;font-feature-settings:"palt" 1;max-width:15em}
+.cta .lead{max-width:600px;margin-top:28px;color:var(--w-m);font-size:clamp(13px,1.5vw,15px);line-height:2.15}
+.cta .hero-a{margin-top:38px}
+.cta-n{margin-top:26px;font-size:11.5px;color:var(--w-f);letter-spacing:.05em}
+.links{margin-top:clamp(52px,7vw,86px);border-top:1px solid var(--rl2);padding-top:clamp(26px,3.4vw,38px);display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0}
+.links a{padding:18px clamp(14px,2vw,26px);border-left:1px solid var(--rl2);display:block;transition:background .4s var(--ease)}
+.links a:first-child{border-left:0;padding-left:0}
+.links a:hover{background:rgba(201,164,100,.06)}
+.links em{display:block;font-family:var(--disp);font-style:italic;font-size:12px;color:var(--gold-l);letter-spacing:.06em}
+.links b{display:block;font-size:13px;font-weight:500;margin-top:7px;color:var(--w)}
+.links span{display:block;font-size:11px;color:var(--w-f);margin-top:6px;line-height:1.75}
+@media(max-width:700px){.links a{border-left:0;border-top:1px solid var(--rl2);padding:16px 0}.links a:first-child{border-top:0}}
+footer{margin-top:clamp(46px,6vw,72px);border-top:1px solid var(--rl2);padding:30px 0 34px;display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end}
+.ft-l .seal{font-size:22px;color:var(--gold-l);margin-bottom:12px}
+.ft-l b{display:block;font-family:var(--disp);font-size:16px;font-weight:500;letter-spacing:.2em}
+.ft-l p{font-size:11px;color:var(--w-f);margin-top:9px;line-height:1.95;letter-spacing:.03em}
+.ft-r{margin-left:auto;display:flex;flex-wrap:wrap;gap:20px;align-items:center;font-size:11px;color:var(--w-f);letter-spacing:.06em}
+.ft-r a{color:var(--w-m);transition:color .3s}
+.ft-r a:hover{color:var(--gold-l)}
+@media(max-width:640px){.ft-r{margin-left:0}}
 
-  /* ── Contact CTA 分岐 ── */
-  .contact-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 52px; }
-  .contact-ctas a {
-    padding: 14px 30px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    text-decoration: none; color: #faf9f6; border: 1.5px solid rgba(250,249,246,0.3);
-    cursor: none; transition: border-color .3s, color .3s, background .3s;
-  }
-  .contact-ctas a:hover { border-color: var(--gold2); color: var(--gold2); }
-  .contact-ctas a.primary { background: var(--gold); border-color: var(--gold); color: #fff; }
-  .contact-ctas a.primary:hover { background: var(--gold2); border-color: var(--gold2); color: #16140f; }
-  .contact-jbrain { margin-top: 36px; font-size: 12px; letter-spacing: 0.08em; color: rgba(250,249,246,.55); }
-  .contact-jbrain a { color: var(--gold2); text-decoration: none; border-bottom: 1px solid rgba(201,164,100,0.4); }
-
-  /* ── Works ── */
-  #works { background: var(--bg); }
-  .works-filter {
-    display: flex; gap: 36px; margin-top: 60px; margin-bottom: 52px;
-    border-bottom: 1px solid var(--border); padding-bottom: 22px;
-  }
-  .filter-btn {
-    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--muted2); background: none; border: none; cursor: none;
-    position: relative; transition: color .3s; padding-bottom: 4px;
-  }
-  .filter-btn::after {
-    content: ''; position: absolute; bottom: -23px; left: 0;
-    width: 0; height: 2px; background: var(--dark); transition: width .3s;
-  }
-  .filter-btn.active { color: var(--dark); }
-  .filter-btn.active::after { width: 100%; }
-  .filter-btn:hover { color: var(--dark); }
-
-  .works-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); }
-  .work-card {
-    aspect-ratio: 4/3; background: var(--bg2);
-    position: relative; overflow: hidden; cursor: none;
-  }
-
-  .work-thumb {
-    position: absolute; inset: 0; overflow: hidden;
-    transition: transform .7s cubic-bezier(0.16,1,0.3,1);
-  }
-  .work-thumb img, .work-thumb iframe {
-    width: 100%; height: 100%; display: block;
-  }
-  .work-thumb img { object-fit: cover; object-position: center; }
-  .work-card:hover .work-thumb { transform: scale(1.04); }
-  .work-bg { position: absolute; inset: 0; }
-  .work-card:nth-child(1) .work-bg { background: linear-gradient(135deg,#ede8df 0%,#e4ddd2 100%); }
-  .work-card:nth-child(2) .work-bg { background: linear-gradient(135deg,#e9e6e0 0%,#dedad2 100%); }
-  .work-card:nth-child(3) .work-bg { background: linear-gradient(135deg,#edeae3 0%,#e2dfd8 100%); }
-  .work-card:nth-child(4) .work-bg { background: linear-gradient(135deg,#e6e2da 0%,#dbd7cf 100%); }
-  .work-card:nth-child(5) .work-bg { background: linear-gradient(135deg,#eae7e0 0%,#e0dcd4 100%); }
-
-  .work-thumb-label {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px; font-weight: 300;
-    color: rgba(22,20,15,0.07); letter-spacing: 0.06em;
-    user-select: none; pointer-events: none;
-  }
-  .work-card:first-child .work-thumb-label { font-size: 96px; }
-
-  .work-overlay {
-    position: absolute; inset: 0; z-index: 2;
-    background: rgba(250,249,246,0.95);
-    display: flex; flex-direction: column;
-    justify-content: center; padding: 28px 32px;
-    opacity: 0; transition: opacity .4s;
-    overflow-y: auto;
-  }
-  .work-card:hover .work-overlay { opacity: 1; }
-  .work-overlay-title {
-    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 14px;
-  }
-  .work-overlay-links { display: flex; flex-direction: column; gap: 8px; }
-  .work-overlay-link {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(13px, 1.2vw, 16px); color: var(--dark);
-    text-decoration: none; padding: 8px 12px;
-    border: 1px solid var(--border); background: var(--bg);
-    display: flex; justify-content: space-between; align-items: center;
-    transition: border-color .2s, background .2s;
-    line-height: 1.3;
-  }
-  .work-overlay-link:hover { border-color: var(--gold); background: var(--bg2); color: var(--gold); }
-  .work-category { font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .work-title-ov { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--dark); }
-
-  .work-info-bar {
-    position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
-    padding: 52px 30px 18px;
-    display: flex; justify-content: space-between; align-items: flex-end;
-    background: linear-gradient(to top,
-      rgba(250,249,246,0.98) 0%,
-      rgba(250,249,246,0.96) 42%,
-      rgba(250,249,246,0.80) 68%,
-      rgba(250,249,246,0) 100%);
-  }
-  .work-info-cat { font-size: clamp(9px, 0.8vw, 11px); letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
-  .work-info-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 1.4vw, 22px); font-weight: 300; color: var(--dark); }
-  .work-arrow {
-    width: 38px; height: 38px;
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted); font-size: 16px; background: var(--bg);
-    transition: border-color .3s, background .3s, color .3s;
-  }
-  .work-card:hover .work-arrow { border-color: var(--dark); background: var(--dark); color: #fff; }
-
-  /* ── Editorial（タイポ）カード ── */
-  .work-ed {
-    background: var(--bg2);
-    background-image:
-      linear-gradient(rgba(22,20,15,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(22,20,15,0.04) 1px, transparent 1px);
-    background-size: 44px 44px;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: clamp(28px, 3.6vw, 52px);
-    transition: background-color .4s;
-  }
-  .work-ed:hover { background-color: var(--bg3); }
-  .work-ed-circles {
-    position: absolute; right: -10%; top: 50%; transform: translateY(-50%);
-    width: 60%; aspect-ratio: 1; border-radius: 50%;
-    border: 1px solid rgba(160,120,58,0.34); z-index: 0; pointer-events: none;
-    transition: transform .7s cubic-bezier(0.16,1,0.3,1);
-  }
-  .work-ed-circles::after {
-    content: ''; position: absolute; inset: 9%;
-    border: 1px solid rgba(160,120,58,0.22); border-radius: 50%;
-  }
-  .work-card:hover .work-ed-circles { transform: translateY(-50%) scale(1.06); }
-  .work-ed-inner { position: relative; z-index: 2; padding-left: clamp(18px, 1.8vw, 28px); }
-  .work-ed-head { position: relative; }
-  .work-ed-head::before {
-    content: ''; position: absolute; left: calc(-1 * clamp(18px, 1.8vw, 28px)); top: 3px; bottom: 5px;
-    width: 3px; background: var(--gold);
-  }
-  .work-ed-eyebrow {
-    font-size: clamp(10px, 0.9vw, 12px); font-weight: 500;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark);
-    margin-bottom: clamp(16px, 1.8vw, 24px);
-  }
-  .work-ed-title {
-    font-weight: 700; line-height: 1.05; letter-spacing: 0.01em;
-    font-size: clamp(32px, 4.2vw, 58px); color: var(--dark);
-    margin-bottom: clamp(16px, 1.8vw, 24px);
-  }
-  .work-ed-title span { display: block; }
-  .work-ed-title .gold { color: var(--gold); }
-  .work-ed-sub {
-    font-size: clamp(13px, 1.25vw, 18px); letter-spacing: 0.04em;
-    color: var(--dark2); margin-bottom: clamp(10px, 1vw, 14px); font-weight: 400;
-  }
-  .work-ed-desc { font-size: clamp(11px, 1vw, 13px); line-height: 1.7; color: var(--muted); }
-
-  /* ── Links ── */
-  #links { background: var(--bg2); }
-  .links-grid {
-    display: grid; grid-template-columns: repeat(4,1fr);
-    gap: 1px; margin-top: 72px; background: var(--border);
-  }
-  .link-card {
-    padding: 48px 36px; background: var(--bg);
-    text-decoration: none; display: flex; flex-direction: column;
-    gap: 18px; position: relative; overflow: hidden; cursor: none;
-    transition: background .3s;
-  }
-  .link-card:hover { background: var(--bg2); }
-  .link-card::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 2px; height: 0; background: var(--gold);
-    transition: height .45s ease;
-  }
-  .link-card:hover::before { height: 100%; }
-  .link-icon { font-size: clamp(20px, 1.8vw, 26px); color: var(--gold); }
-  .link-platform { font-size: clamp(9px, 1vw, 11px); letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
-  .link-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 1.6vw, 24px); font-weight: 300; color: var(--dark); line-height: 1.25;
-  }
-  .link-desc { font-size: clamp(13px, 1.1vw, 15px); color: var(--muted); line-height: 1.65; }
-  .link-arrow {
-    margin-top: auto; font-size: 17px; color: var(--muted2);
-    transition: transform .3s, color .3s;
-  }
-  .link-card:hover .link-arrow { transform: translate(4px,-4px); color: var(--gold); }
-
-  /* ── Contact ── */
-  #contact {
-    background: var(--dark); color: #faf9f6;
-    text-align: center; padding: 130px 64px;
-    position: relative; overflow: hidden;
-  }
-  #contact::before {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      -45deg, transparent, transparent 60px,
-      rgba(255,255,255,0.015) 60px, rgba(255,255,255,0.015) 61px
-    );
-  }
-  .contact-inner { position: relative; z-index: 1; }
-  .contact-label { font-size: clamp(9px, 0.9vw, 11px); letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold2); margin-bottom: 28px; display: block; }
-  .contact-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 6vw, 92px); font-weight: 300;
-    line-height: 1; letter-spacing: -0.02em; color: #faf9f6;
-  }
-  .contact-title em { font-style: italic; color: var(--gold2); }
-  .contact-sub { font-size: clamp(13px, 1.1vw, 16px); color: rgba(250,249,246,.55); margin-top: 24px; }
-  .contact-email {
-    display: inline-block; margin-top: 52px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 1.5vw, 24px); color: #faf9f6; text-decoration: none;
-    border-bottom: 1px solid rgba(250,249,246,0.25); padding-bottom: 4px;
-    letter-spacing: 0.06em; transition: color .3s, border-color .3s;
-  }
-  .contact-email:hover { color: var(--gold2); border-color: var(--gold2); }
-
-  footer {
-    background: var(--dark2); border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 36px var(--pad);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-copy { font-size: 11px; color: rgba(250,249,246,.3); letter-spacing: 0.1em; }
-  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; color: rgba(250,249,246,.5); }
-
-  /* keyframes */
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
-  @keyframes slideUp { from{transform:translateY(110%)} to{transform:none} }
-
-  /* responsive */
-  @media (max-width:1024px){
-    .about-grid{grid-template-columns:1fr;gap:48px}
-    .skills-grid{grid-template-columns:repeat(2,1fr)}
-    .services-grid{grid-template-columns:1fr}
-    .links-grid{grid-template-columns:repeat(2,1fr)}
-    .works-grid{grid-template-columns:1fr}
-    .work-card:first-child{grid-column:span 1;aspect-ratio:4/3}
-  }
-  @media (max-width:640px){
-    .hero-title{font-size:46px}
-    .skills-grid,.links-grid{grid-template-columns:1fr}
-    .about-stats{gap:24px}
-    .works-filter{gap:16px;flex-wrap:wrap}
-    .hero-geo{display:none}
-    .hero-content{max-width:100%}
-    .nav-links{display:none}
-    .nav-logo{font-size:17px; white-space:nowrap;}
-    nav{padding:16px var(--pad);}
-    nav.scrolled{padding:14px var(--pad);}
-  }
-  @media (min-width:1440px){
-    .skill-card{padding:52px 44px}
-    .link-card{padding:52px 40px}
-    .about-grid{grid-template-columns:4fr 6fr}
-  }
+/* ── 出現 ─────────────────────────────────── */
+[data-r]{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0ms)}
+[data-r].in{opacity:1;transform:none}
+.ln{display:block;overflow:hidden}
+.ln>i{display:block;font-style:normal;transform:translateY(108%);transition:transform 1.05s var(--ease)}
+.in .ln>i{transform:none}
+h1.hero-t .ln:nth-child(2)>i{transition-delay:.13s}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  [data-r]{opacity:1;transform:none}.ln>i{transform:none}
+}
 </style>
-<script>
-  // 旧バージョンが残した Service Worker / キャッシュを掃除する（古い表示の固着対策）
-  (function(){
-    try {
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations()
-          .then(function(rs){ rs.forEach(function(r){ r.unregister(); }); })
-          .catch(function(){});
-      }
-      if (window.caches && caches.keys) {
-        caches.keys()
-          .then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); })
-          .catch(function(){});
-      }
-    } catch(e){}
-  })();
-</script>
 </head>
-<body>
+<body id="top">
 
-<div id="cursor">
-  <div class="ring" id="ring"></div>
-  <div class="dot"  id="dot"></div>
-</div>
+<div id="prog"></div>
+<div id="cur"><div class="r"></div><div class="d"></div></div>
 
-<!-- Nav -->
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">祠堂じゅまる</a>
-    <ul class="nav-links">
-      <li><a href="#works">Work</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#skills">Why</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+<aside id="rail" aria-hidden="true">
+  <a href="#issue" data-s="issue">Issue</a>
+  <a href="#service" data-s="service">Service</a>
+  <a href="#works" data-s="works">Works</a>
+  <a href="#flow" data-s="flow">Flow</a>
+  <a href="#about" data-s="about">About</a>
+  <a href="#faq" data-s="faq">Q&amp;A</a>
+</aside>
+
+<header>
+  <div class="wrap hd">
+    <a href="#top" class="hd-m" aria-label="JYUMARU">
+      <svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <b>JYUMARU</b>
+    </a>
+    <nav class="hd-n">
+      <a href="#service">できること</a>
+      <a href="#works">作例</a>
+      <a href="#flow">進め方</a>
+      <a href="#about">About</a>
+      <a href="#faq">Q&amp;A</a>
+    </nav>
+    <a href="https://jbrain.space/" target="_blank" rel="noopener" class="hd-c">制作を相談する</a>
+  </div>
+</header>
+
+<!-- ══ HERO ══════════════════════════════════════════ -->
+<div class="hero" data-ink>
+  <div class="hero-g"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <svg class="seal hero-s" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+  <div class="wrap">
+    <div class="hero-k in">
+      <span class="lb lb-ja">祠堂じゅまる（JYUMARU）／神奈川・オンラインで全国対応</span>
+    </div>
+    <div class="hero-k" style="margin-top:14px"><em class="en">Web &nbsp;·&nbsp; Tool &nbsp;·&nbsp; AI &nbsp;·&nbsp; Music</em></div>
+    <h1 class="hero-t in">
+      <span class="ln"><i><span class="q">「</span>こういうの作れる？<span class="q">」</span></i></span>
+      <span class="ln"><i>から、始められます。</i></span>
+    </h1>
+    <p class="hero-l" data-r style="--d:.34s">Webサイト、広告バナー、社内で使う業務ツール、生成AIを使ったビジュアル制作。仕様書はなくて構いません。「こういうことがしたい」の一行から、要件を組み立てるところごとお引き受けします。いきなり完成品を目指さず、まず小さく形にしてお見せするので、「思っていたのと違った」が起きません。</p>
+    <div class="hero-a" data-r style="--d:.44s">
+      <a href="https://jbrain.space/" target="_blank" rel="noopener" class="act act-p"><span>制作を相談する</span><small>free consultation</small></a>
+      <a href="#works" class="act"><span>作例を見る</span><small>fourteen projects</small></a>
+    </div>
+    <ul class="facts" data-r style="--d:.54s">
+      <li><b>15–25<em>時間／週</em></b><span>安定して確保できる稼働</span></li>
+      <li><b>当日<em>〜翌営業日</em></b><span>ご連絡への返信</span></li>
+      <li><b>1<em>名体制</em></b><span>窓口から制作まで同じ人間</span></li>
+      <li><b>NDA<em>対応</em></b><span>ご相談の段階から締結可</span></li>
     </ul>
   </div>
-</nav>
+</div>
 
-<!-- Hero -->
-<section id="hero">
-  <div class="hero-geo"></div>
-  <div class="hero-vline"></div>
-  <div class="hero-content">
-    <div class="hero-label">AI Character Studio &nbsp;/&nbsp; 制作・運用・コンサル</div>
-    <h1 class="hero-title">
-      <span class="line"><span>AIキャラを、</span></span>
-      <span class="line"><span>つくる。</span></span>
-      <span class="line"><span>育てる。</span></span>
-      <span class="line"><span>任せられる。</span></span>
-    </h1>
-    <p class="hero-desc">
-      複数のAIキャラを、毎日・規約を守って運用するスタジオ。<br>
-      顔も世界観もブレさせず、AIだと隠さずに続ける。<br>
-      その仕組みごと、あなたのブランドへお渡しします。
-    </p>
-    <div class="hero-cta">
-      <a href="https://jbrain.space/" target="_blank" class="btn-primary">制作を相談する</a>
-      <a href="#works" class="btn-outline">実績を見る</a>
+<div class="mq" data-ink>
+  <div class="mq-in" id="mq">
+    <div>
+      <span>Landing Page</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Website</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Ad Creative</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Tool Development</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>AI Direction</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Automation</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Music</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+      <span>Writing</span><svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
     </div>
   </div>
-  <div class="scroll-hint">Scroll</div>
-</section>
+</div>
 
-<!-- What We Make（実績＝AIキャラ群）を最上部へ昇格 -->
-<section id="works">
-  <div class="reveal"><div class="section-label">What We Make ／ 実績</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">毎日、動いている<br><em>AIキャラクターたち。</em></h2></div>
-  <p class="works-lead reveal reveal-delay-2">単発の作品ではなく、"毎日動き続けている"生きた実証です。AIバーチャルキャラクター・音楽ペルソナ・運用自動化から、広告バナー・動画・Webの制作まで——ジャンルの幅そのものが、あなたの案件への対応力になります。カテゴリごとにご覧ください。</p>
-  <div class="works-filter reveal reveal-delay-2">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="aikyara">AIキャラクター</button>
-    <button class="filter-btn" data-filter="music">音楽ペルソナ</button>
-    <button class="filter-btn" data-filter="auto">制作・運用</button>
-    <button class="filter-btn" data-filter="other">Other Works</button>
-  </div>
-  <div class="works-grid">
-
-    <!-- AIキャラ: 黒崎いろは（看板・表の主人公） -->
-    <a href="https://www.instagram.com/iroha.kurosaki/" target="_blank" class="work-card reveal" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb"><img src="iroha-image.jpg" alt="黒崎いろは @iroha.kurosaki JYUMARU看板AIキャラクター"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character ／ 看板・表の主人公</div><div class="work-info-title">黒崎いろは — @iroha.kurosaki</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">AI Character ／ 看板・Instagram/Reels・日本語</div>
-        <div class="work-title-ov">黒崎いろは</div>
-        <p class="work-ov-line">スタジオの"顔"となる看板キャラ。黒×白銀の二面性を、等身大でまっすぐな言葉で発信。</p>
-        <p class="work-ov-line"><strong>対応できる案件</strong>：ブランドの主役キャラ制作／Reels・短尺動画の主人公</p>
-        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・Instagram／短尺動画で展開</p>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用・AI情報ラベルON）</div>
-      </div>
-    </a>
-
-    <!-- AIキャラ: 椎名しずく -->
-    <a href="https://www.instagram.com/shizuku.417/" target="_blank" class="work-card reveal" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb"><img src="shizuku-image.jpg" alt="椎名しずく @shizuku.417"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character ／ 人物固定・秘書AI</div><div class="work-info-title">椎名しずく — @shizuku.417</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">AI Character ／ 人物固定・秘書AI・日本語</div>
-        <div class="work-title-ov">椎名しずく</div>
-        <p class="work-ov-line">顔がブレないAIキャラを毎日投稿で維持。顔・髪を固定し、服とシーンだけ可変（NANOBANANA）。</p>
-        <p class="work-ov-line"><strong>対応できる案件</strong>：ブランドの"顔"キャラ制作／人物固定の連載ビジュアル</p>
-        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・毎日投稿</p>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用・AI情報ラベルON）</div>
-      </div>
-    </a>
-
-    <!-- AIキャラ: 東雲哀 -->
-    <a href="https://www.instagram.com/shinonome_ai_tokyo/" target="_blank" class="work-card reveal reveal-delay-1" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb"><img src="shinonome-image.jpg" alt="東雲哀 @shinonome_ai_tokyo AIキャラクター Quiet Luxury Tokyo Dawn"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character ／ Global・English</div><div class="work-info-title">東雲哀 — @shinonome_ai_tokyo</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">AI Character ／ Quiet Luxury × Tokyo Dawn</div>
-        <div class="work-title-ov">東雲哀</div>
-        <p class="work-ov-line">海外向けAIインフルエンサーの立ち上げ実証。英語ベースで世界へ発信し、IG→Threads→FBクロスシェアを確立。</p>
-        <p class="work-ov-line"><strong>対応できる案件</strong>：越境・多言語のAIキャラ立ち上げ／Quiet Luxury系ブランド</p>
-        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・英語Global発信</p>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用）</div>
-      </div>
-    </a>
-
-    <!-- AIキャラ: 月島宗介 -->
-    <a href="https://www.instagram.com/sousuke.tsukishima/" target="_blank" class="work-card reveal reveal-delay-2" data-cat="aikyara" style="text-decoration:none;">
-      <div class="work-thumb"><img src="tsukishima-image.jpg" alt="月島宗介 AI Visual Archivist"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character ／ 世界観固定</div><div class="work-info-title">月島宗介 — @sousuke.tsukishima</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">AI Character ／ 世界観固定・住民可変</div>
-        <div class="work-title-ov">月島宗介</div>
-        <p class="work-ov-line">ダーク脱彩度の世界観を固定し、被写体（住民）を毎回変える。人物固定とは"逆"のアプローチ。</p>
-        <p class="work-ov-line"><strong>対応できる案件</strong>：ブランド世界観の連作ビジュアル／アート寄り案件</p>
-        <p class="work-ov-line"><strong>ステータス</strong>：稼働中・収蔵カタログ拡張中</p>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター（AI明示運用）</div>
-      </div>
-    </a>
-
-    <!-- AIキャラ: 逢坂千秋（文・画・声の3導線） -->
-    <div class="work-card" data-cat="aikyara">
-      <div class="work-thumb"><img src="aisaka-image.jpg" alt="逢坂千秋 @chiaki.aisaka 名残×教養×声のAIキャラクター"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">AI Character ／ 文・画・声</div><div class="work-info-title">逢坂千秋 — note ／ IG ／ 声</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">AI Character ／ 名残 × 教養 × 声</div>
-        <p class="work-ov-line" style="margin-bottom:12px;">過ぎてゆくものを、言葉と声で留める人。文（note）・画（IG）・声（AI音声）の3チャンネルを横断運用する実証。</p>
-        <div class="work-overlay-links">
-          <a href="https://note.com/aisaka_chiaki" target="_blank" class="work-overlay-link">note「名残帖」 <span>↗</span></a>
-          <a href="https://www.instagram.com/chiaki.aisaka/" target="_blank" class="work-overlay-link">Instagram <span>↗</span></a>
-          <a href="https://stand.fm/channels/6a516f768a6172d42da7262f" target="_blank" class="work-overlay-link">stand.fm（AI音声朗読） <span>↗</span></a>
-        </div>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AIキャラクター・専用オリジナルAI音声を明示</div>
-      </div>
+<!-- ══ ISSUE ═════════════════════════════════════════ -->
+<section id="issue" class="pad" style="scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">01 — Issue</span><em class="en">Where things stall</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">たいてい、<br>ここで止まっています。</h2>
+      <p class="sh-p" data-r style="--d:.16s">外注を考えはじめた会社さんから、実際によく伺うお話です。どれも、進め方のほうを変えれば解けます。</p>
     </div>
-
-    <!-- 音楽ペルソナ: Tangent -->
-    <a href="https://www.youtube.com/@Tangent_com/shorts" target="_blank" class="work-card reveal" data-cat="music" style="text-decoration:none;">
-      <div class="work-thumb"><img src="tangent-image.jpg" alt="Tangent AI Music"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">Music Persona ／ AI Music</div><div class="work-info-title">Tangent — YouTube Shorts</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-category">Music Persona ／ AI音楽IP</div>
-        <div class="work-title-ov">Tangent</div>
-        <p class="work-ov-line">作詞・楽曲生成からShorts／TikTok展開まで一気通貫。音のキャラIP化。</p>
-        <p class="work-ov-line"><strong>対応できる案件</strong>：楽曲キャラ・サウンドロゴ・音のIP化</p>
-        <div class="work-ai-note">🤖 Produced by JYUMARU Studio ／ AI生成楽曲（AI明示運用）</div>
-      </div>
-    </a>
-
-    <!-- 音楽ペルソナ: TRINITAS（HyperFollowへリンク） -->
-    <a href="https://distrokid.com/hyperfollow/trinitas1/meguri" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="music" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Music Persona / DSP</div>
-          <div class="work-ed-title"><span>TRINI</span><span class="gold">TAS</span></div>
+    <ol class="rows">
+      <li class="row" data-r>
+        <div class="row-n">01</div>
+        <div class="row-c">
+          <h3>何を頼めばいいか、うまく言葉にできない。</h3>
+          <p>仕様書は要りません。「こういうことがしたい」というお話から、要件のほうをこちらで組み立ててお返しします。やりたいことを言語化するところが、この仕事の半分です。</p>
         </div>
-        <div class="work-ed-sub">和風 × Vocal Unit ／ 世界配信中</div>
-        <div class="work-ed-desc">作詞〜楽曲〜DSP配信まで一気通貫。<br>デビュー曲「華」世界配信、最新曲「巡」も展開中。<br><span style="color:var(--muted2)">🤖 AI音楽（AI明示運用）／ Spotify・Apple Music ほか ↗</span></div>
-      </div>
-    </a>
-
-    <!-- 音楽ペルソナ: 小夜（公開リンク未確定→非リンク） -->
-    <div class="work-card work-ed reveal reveal-delay-2" data-cat="music">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Music Persona / Mood</div>
-          <div class="work-ed-title"><span>小夜</span><span class="gold">Sayo</span></div>
+      </li>
+      <li class="row" data-r style="--d:.06s">
+        <div class="row-n">02</div>
+        <div class="row-c">
+          <h3>出てきたものが、思っていたのと違った。</h3>
+          <p>完成させてから初めて見せる進め方をすると、必ず起きます。方向が分かる最小限のものを先にお見せし、認識が合ってから作り込むので、大きな手戻りが出ません。</p>
         </div>
-        <div class="work-ed-sub">薄明 & 明るい ／ 2モード</div>
-        <div class="work-ed-desc">情景を描く楽曲IP。<br>週次で楽曲を制作・展開。<br><span style="color:var(--muted2)">🤖 AI音楽（AI明示運用）</span></div>
-      </div>
-    </div>
-
-    <!-- 運用・自動化: 鏑木一茶（Kindle＋X自動化） -->
-    <div class="work-card work-ed reveal" data-cat="auto">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Author IP / Automation</div>
-          <div class="work-ed-title"><span>鏑木</span><span class="gold">一茶</span></div>
+      </li>
+      <li class="row" data-r style="--d:.12s">
+        <div class="row-n">03</div>
+        <div class="row-c">
+          <h3>小さな直しのたびに、見積もりを取り直すのが面倒。</h3>
+          <p>編集できる形でお渡しします。文字と画像の差し替えは御社の手元で完結します。触りたくないところだけ、こちらにご依頼ください。</p>
         </div>
-        <div class="work-ed-sub">X自動投稿（AIキャラ）＋ Kindle著者（人間名義）</div>
-        <div class="work-ed-desc">X（@kaburagiom）はAIキャラとしてAI明示運用。<br>Kindle著者「鏑木一茶」は祠堂じゅまるの筆名（人間名義）。</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-overlay-title">🤖 X自動投稿基盤（AIキャラ・GitHub Actions）</div>
-        <p class="work-ov-line" style="margin-bottom:10px;">X運用はAIキャラとして自動化実装（AI明示）。下記のKindle既刊11冊は、祠堂じゅまるの<strong>人間名義（筆名）</strong>による著作です。</p>
-        <div class="work-overlay-links">
-          <a href="https://www.amazon.co.jp/stores/author/B0G1HSNTYH" target="_blank" class="work-overlay-link">Kindle著者ページ（人間名義・11冊） <span>↗</span></a>
-          <a href="https://amzn.asia/d/0iunBxaR" target="_blank" class="work-overlay-link">50代からの筋トレ革命 <span>↗</span></a>
-          <a href="https://amzn.asia/d/0eMhLyI3" target="_blank" class="work-overlay-link">５０代からの健康投資術 <span>↗</span></a>
-          <a href="https://amzn.asia/d/0ds66ILJ" target="_blank" class="work-overlay-link">“忙しい”を言い訳にしない筋トレ入門 <span>↗</span></a>
+      </li>
+      <li class="row" data-r style="--d:.18s">
+        <div class="row-n">04</div>
+        <div class="row-c">
+          <h3>社内の手作業を、そろそろ仕組みにしたい。</h3>
+          <p>Webだけではありません。Windowsで配布できる業務ツールや、毎日無人で回る仕組みの構築まで、同じ窓口で承ります。</p>
         </div>
-        <div class="work-ai-note">X運用＝AIキャラ（AI明示）の自動化実装／Kindle既刊＝人間名義の著作。同名だが別ブランドとして扱っています。</div>
-      </div>
-    </div>
-
-    <!-- 運用・自動化: じゅまるX -->
-    <div class="work-card work-ed reveal reveal-delay-1" data-cat="auto">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Automation / Low-cost</div>
-          <div class="work-ed-title"><span>X自動</span><span class="gold">運用</span></div>
-        </div>
-        <div class="work-ed-sub">GitHub Actions × Gemini</div>
-        <div class="work-ed-desc">X自動投稿をクラウド放置運用へ。<br>準備の自動化を極限まで下げる実装ノウハウ。</div>
-      </div>
-    </div>
-
-    <!-- 制作・運用: 動画/Reels -->
-    <div class="work-card work-ed reveal reveal-delay-2" data-cat="auto">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Video / Short-form</div>
-          <div class="work-ed-title"><span>動画</span><span class="gold">/ Reels</span></div>
-        </div>
-        <div class="work-ed-sub">AIキャラReels ／ PV制作</div>
-        <div class="work-ed-desc">AIキャラのReels量産と、ブラウザ内完結のPV制作。<br>静止画→動画→コマ検品まで一気通貫。LP・動画案件にも対応。</div>
-      </div>
-    </div>
-
-    <!-- Other Works: 広告バナー作例 -->
-    <a href="supplement-banner.jpg" target="_blank" class="work-card reveal" data-cat="other" style="text-decoration:none;">
-      <div class="work-thumb"><img src="supplement-banner.jpg" alt="健康系 広告バナー 作例 生成AI×Canva"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">Design ／ 広告バナー（作例）</div><div class="work-info-title">健康系 広告バナー — 生成AI×Canva</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-
-    <!-- Other Works: RayPhoneAI note -->
-    <a href="https://note.com/rayphone" target="_blank" class="work-card work-ed reveal reveal-delay-1" data-cat="other" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">AI Persona / Note</div>
-          <div class="work-ed-title"><span>RayPhone</span><span class="gold">AI</span></div>
-        </div>
-        <div class="work-ed-sub">AIの"使い方"を実体験で ／ note</div>
-        <div class="work-ed-desc">「AIの私が、実際にやって・しくじった記録」。<br>実務で使えるAIの"使い方"を、実体験ベースで綴る。<br><span style="color:var(--muted2)">🤖 AIキャラクター（AI明示運用）</span></div>
-      </div>
-    </a>
-
-    <!-- Other Works: 祠堂じゅまる note -->
-    <a href="https://note.com/jyumarucom" target="_blank" class="work-card work-ed reveal reveal-delay-2" data-cat="other" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">AI Notes / Note</div>
-          <div class="work-ed-title"><span>祠堂</span><span class="gold">じゅまる</span></div>
-        </div>
-        <div class="work-ed-sub">note Creator / AI実装ノウハウ</div>
-        <div class="work-ed-desc">AIキャラ制作・自動化の実装ノウハウと<br>制作の裏側を毎日綴るnote</div>
-      </div>
-    </a>
-
-    <!-- Other Works: 楽天ROOM -->
-    <a href="https://room.rakuten.co.jp/room_4519f16ec6/items" target="_blank" class="work-card work-ed reveal" data-cat="other" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Curation / Rakuten</div>
-          <div class="work-ed-title"><span>Rakuten</span><span class="gold">ROOM</span></div>
-        </div>
-        <div class="work-ed-sub">お買いものSNS / Curation</div>
-        <div class="work-ed-desc">日用品・ガジェットを<br>毎日キュレーション</div>
-      </div>
-    </a>
-
-    <!-- Other Works: YouTube台本 -->
-    <div class="work-card work-ed reveal reveal-delay-1" data-cat="other">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Writing / Script</div>
-          <div class="work-ed-title"><span>YouTube</span><span class="gold">台本</span></div>
-        </div>
-        <div class="work-ed-sub">Short Film / Documentary</div>
-        <div class="work-ed-desc">事件解説・ホラー・ドキュメンタリーの<br>構成台本を制作</div>
-      </div>
-      <div class="work-overlay">
-        <div class="work-overlay-title">YouTube台本</div>
-        <div class="work-overlay-links">
-          <a href="https://docs.google.com/document/d/1EZetIvRZG2wCDbs30h9EyiOMD3HWOnDmFBgYQSiIC0c/edit" target="_blank" class="work-overlay-link">北関東連続幼女誘拐殺人事件 <span>↗</span></a>
-          <a href="https://docs.google.com/document/d/1afqhvqxMnLxsMdEZLmbp3r2liZdeUV9lP0bvdpAEPyA/edit" target="_blank" class="work-overlay-link">脱獄王・白鳥由栄 <span>↗</span></a>
-          <a href="https://docs.google.com/document/d/1xW95c_YEYoOK1rxV8Vo-Tp9D4dMjGcziajrzwEjixzw/edit" target="_blank" class="work-overlay-link">国松警察庁長官狙撃事件 <span>↗</span></a>
-          <a href="https://www.youtube.com/watch?v=MhmKwppqImI" target="_blank" class="work-overlay-link">お化け屋敷（ショート） <span>↗</span></a>
-          <a href="https://www.youtube.com/watch?v=OXi3pa_0Edc" target="_blank" class="work-overlay-link">タイムカプセル（ショート） <span>↗</span></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Other Works: jbrain.space 公式サイト制作 -->
-    <a href="https://jbrain.space/" target="_blank" class="work-card work-ed reveal" data-cat="other" style="text-decoration:none;">
-      <div class="work-ed-circles"></div>
-      <div class="work-ed-inner">
-        <div class="work-ed-head">
-          <div class="work-ed-eyebrow">Web / Official Site</div>
-          <div class="work-ed-title"><span>公式サイト</span><span class="gold">制作</span></div>
-        </div>
-        <div class="work-ed-sub">jbrain.space ／ WordPress</div>
-        <div class="work-ed-desc">スタジオ公式サイトを自社で設計・実装・運用。<br>ダーク×和モダンのLP制作にも対応。 ↗</div>
-      </div>
-    </a>
-
-    <!-- Other Works: Redbubble 物販 -->
-    <a href="https://www.redbubble.com/people/jyumaru/shop" target="_blank" class="work-card reveal reveal-delay-1" data-cat="other" style="text-decoration:none;">
-      <div class="work-thumb"><img src="redbubble-image.jpg" alt="JYUMARU Redbubble 浮世絵・和モチーフ POD物販"></div>
-      <div class="work-info-bar">
-        <div><div class="work-info-cat">Goods ／ POD物販</div><div class="work-info-title">Redbubble — 浮世絵 × ミニマル</div></div>
-        <div class="work-arrow">→</div>
-      </div>
-    </a>
-
+      </li>
+    </ol>
   </div>
 </section>
 
-<!-- Services（提供サービス）を新設 -->
-<section id="services">
-  <div class="reveal"><div class="section-label">Services ／ 提供サービス</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">3つの<br><em>関わり方。</em></h2></div>
-  <p class="works-lead reveal reveal-delay-2">「キャラを丸ごと作ってほしい」「作る時間がない、運用だけ任せたい」「自分で作れるようになりたい」。フェーズに合わせて、3つの関わり方から選べます。</p>
-  <div class="services-grid">
-    <div class="service-card reveal reveal-delay-1">
-      <span class="service-num">01</span>
-      <div class="service-name">制作代行<small>Production</small></div>
-      <div class="service-desc">ブランドの"顔"となるAIキャラをゼロから設計・制作。キャラ設計＋固定リファレンス構築＋初期ビジュアル一式。顔・世界観がブレない設計込み。</div>
-      <div class="service-note">"どんな顔でも・どんな世界観でも作れる"は、現に毎日運用中のAIキャラが証明しています。</div>
-      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
+<!-- ══ SERVICE ═══════════════════════════════════════ -->
+<section id="service" class="pad" style="background:var(--paper-2);scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">02 — Service</span><em class="en">What I build</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">できること。</h2>
+      <p class="sh-p" data-r style="--d:.16s">「作る」で終わりにしません。公開して、運用して、そのあとの数字を見るところまで、自分で手を動かしています。</p>
     </div>
-    <div class="service-card reveal reveal-delay-2">
-      <span class="service-num">02</span>
-      <div class="service-name">運用代行<small>Operation</small></div>
-      <div class="service-desc">画像・キャプション・投稿パケットの制作と納品まで。更新が続かない／毎日の制作工数がない、を肩代わりします。</div>
-      <div class="service-note">投稿ボタンは、必ずお客様の手で（またはMeta公式予約で）。JYUMARUは"準備"までを引き受け、規約を守ります。</div>
-      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
-      <span class="service-num">03</span>
-      <div class="service-name">コンサル／伴走<small>Consulting</small></div>
-      <div class="service-desc">社内で内製したい・立ち上げの設計だけ相談したい方へ。顔固定メソッド・多言語立ち上げ・低コスト自動運用の設計と伴走。</div>
-      <div class="service-note">机上論ではありません。毎日実運用している人間が、つまずき所ごとお渡しします。</div>
-      <a href="https://jbrain.space/" target="_blank" class="service-cta">→ 詳しく相談する</a>
-    </div>
-  </div>
-  <p class="services-pricing-note reveal reveal-delay-2">料金は"制作物の質と工数"で決まります（フォロワー数では決めません）。撮影・モデル・スタジオが不要なぶん、従来のビジュアル制作より軽い初期費用から始められます。詳しい料金の考え方は、ご相談時にお伝えします。</p>
-</section>
-
-<!-- Why JYUMARU（選ばれる理由・旧Skills） -->
-<section id="skills">
-  <div class="reveal"><div class="section-label">Why JYUMARU ／ 選ばれる理由</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">だから、<br><em>任せられる。</em></h2></div>
-  <div class="skills-grid">
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-num">01</span>
-      <div class="skill-name">顔がブレない</div>
-      <div class="skill-desc">顔・髪を固定し服とシーンだけ可変するメソッドで、毎日投稿でも同一人物性を保持。連載ビジュアルの"顔"を安定して供給します。</div>
-      <div class="skill-tags"><span class="tag">人物固定</span><span class="tag">一貫性</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-num">02</span>
-      <div class="skill-name">世界観が続く</div>
-      <div class="skill-desc">脱彩度・質感・光まで世界観を固定し、被写体を変えても崩れない連作を設計。ブランドのトーンを長期に保ちます。</div>
-      <div class="skill-tags"><span class="tag">世界観固定</span><span class="tag">アートディレクション</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-num">03</span>
-      <div class="skill-name">多言語で届く</div>
-      <div class="skill-desc">日本語だけでなく英語Globalの立ち上げ実証あり。IG→Threads→FBのクロスシェアまで、越境の導線を設計します。</div>
-      <div class="skill-tags"><span class="tag">英語Global</span><span class="tag">越境</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-num">04</span>
-      <div class="skill-name">低コストで回る</div>
-      <div class="skill-desc">Python・API・クラウドで"準備"を自動化し、運用工数を極限まで圧縮。撮影・モデル・スタジオ不要の軽い制作基盤。</div>
-      <div class="skill-tags"><span class="tag">自動化</span><span class="tag">低コスト</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-num">05</span>
-      <div class="skill-name">AI明示で、続く</div>
-      <div class="skill-desc">すべてAIキャラクターであることを明示し、投稿の瞬間は自動化しない設計。"バレなければいい"ではなく"続けられる作り方"を共有します。</div>
-      <div class="skill-tags"><span class="tag">AI明示</span><span class="tag">規約順守</span></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-num">06</span>
-      <div class="skill-name">動画・声まで届く</div>
-      <div class="skill-desc">静止画だけでなく、AIキャラのReels量産・ブラウザ内完結のPV制作・専用AI音声のナレーションまで。LP・動画の案件にもワンストップで対応します。</div>
-      <div class="skill-tags"><span class="tag">動画/Reels</span><span class="tag">AI音声</span></div>
-    </div>
+    <ol class="rows">
+      <li class="row" data-r>
+        <div class="row-n">01</div>
+        <div class="row-c">
+          <div><h3>LP・ホームページ制作</h3><span class="row-en">Landing Page &amp; Website</span></div>
+          <div>
+            <p>構成の設計から、デザイン、実装まで。文字量が変わっても崩れない組み方にしたうえで、編集できるデータのままお渡しします。公開後の更新は御社で回せます。</p>
+            <div class="tags">構成設計<i>／</i>Figma納品<i>／</i>HTML・CSS実装<i>／</i>WordPress<i>／</i>スマートフォン最適化</div>
+          </div>
+        </div>
+      </li>
+      <li class="row" data-r style="--d:.06s">
+        <div class="row-n">02</div>
+        <div class="row-c">
+          <div><h3>広告バナー・サムネイル</h3><span class="row-en">Ad Creative</span></div>
+          <div>
+            <p>コピー、画像、レイアウトをまとめて設計します。配信面に合わせた比率違いの展開と、A/Bテスト用の差分制作まで、継続で回せる体制で承ります。</p>
+            <div class="tags">Meta広告<i>／</i>1:1・4:5・9:16<i>／</i>YouTubeサムネイル<i>／</i>A/B用の差分<i>／</i>継続制作</div>
+          </div>
+        </div>
+      </li>
+      <li class="row" data-r style="--d:.12s">
+        <div class="row-n">03</div>
+        <div class="row-c">
+          <div><h3>業務ツール・アプリ開発</h3><span class="row-en">Tool Development</span></div>
+          <div>
+            <p>社内の手作業を減らす道具を作ります。自分用に作ったものを、インストーラと手順書をつけて配布できる製品の形まで仕上げた実績があります。</p>
+            <div class="tags">Windows配布アプリ<i>／</i>業務自動化<i>／</i>タスク・顧客管理<i>／</i>Excel・Access<i>／</i>定時実行</div>
+          </div>
+        </div>
+      </li>
+      <li class="row" data-r style="--d:.18s">
+        <div class="row-n">04</div>
+        <div class="row-c">
+          <div><h3>AIを使ったビジュアル制作</h3><span class="row-en">AI Production</span></div>
+          <div>
+            <p>撮影・モデル・スタジオを使わずに、必要な絵を必要なだけ作ります。画像生成の環境は自分のPCに構築してあり、人物の顔や画風を固定したまま量産できます。AIを使ったことは、必ず開示したうえで運用します。</p>
+            <div class="tags">人物・商品ビジュアル<i>／</i>画風の作り分け<i>／</i>顔の固定<i>／</i>動画・Reels<i>／</i>AI明示の運用設計</div>
+          </div>
+        </div>
+      </li>
+      <li class="row" data-r style="--d:.24s">
+        <div class="row-n">05</div>
+        <div class="row-c">
+          <div><h3>ライティング</h3><span class="row-en">Writing</span></div>
+          <div>
+            <p>記事、原稿、動画台本、LPのコピー。読み手が途中で降りない順番の作り方を、書籍と長編の台本で積み上げてきました。</p>
+            <div class="tags">記事・コラム<i>／</i>YouTube台本<i>／</i>書籍（Kindle）<i>／</i>LPのコピー<i>／</i>取材原稿</div>
+          </div>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
-<!-- About（誰がやっているか） -->
-<section id="about">
-  <div class="reveal"><div class="section-label">About ／ 誰がやっているか</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">一人で、複数のキャラを<br><em>毎日動かす人。</em></h2></div>
-  <div class="about-grid">
-    <div class="about-photo reveal reveal-delay-2">
-      <img src="about-image.png" alt="アートイメージ"
-        style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+<!-- ══ WORKS ═════════════════════════════════════════ -->
+<section id="works" class="pad ink" data-ink style="scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">03 — Works</span><em class="en">Selected works</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">作例。</h2>
+      <p class="sh-p" data-r style="--d:.16s">自分で手を動かしたものだけを載せています。ここに並んでいるのは、すべて自主制作および自社開発です。クライアント様の案件は、納品を終えて掲載のご許可をいただいたもののみ公開します。</p>
     </div>
-    <div class="about-text reveal reveal-delay-3">
-      <p><strong>祠堂じゅまる（JYUMARU）</strong>は、AIキャラクターを"資産"として設計・制作・運用する日本のAIキャラクタースタジオです。</p>
-      <p>看板の黒崎いろは、椎名しずく・東雲哀・月島宗介・逢坂千秋といったAIバーチャルキャラクターと、音楽ペルソナ、運用自動化まで。企画・ビジュアル・文章・声・多言語発信を、一貫して自社運用しています。</p>
-      <p>その運用ノウハウそのものを、<strong>制作代行・運用代行・コンサルティング</strong>としてお渡しします。毎日、規約を守って動かし続けている——その事実が、あなたの案件を安心して任せられる理由です。</p>
-      <div class="about-stats">
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="12">0</span>
-          <span class="stat-label">AIキャラ 体</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="3">0</span>
-          <span class="stat-label">音楽ペルソナ 組</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num counter" data-target="100">0</span>
-          <span class="stat-label">AI明示 %</span>
-        </div>
-      </div>
+
+    <div class="filt" data-r>
+      <button class="on" data-f="all">すべて<i>14</i></button>
+      <button data-f="build">制作・開発<i>06</i></button>
+      <button data-f="ai">AI・映像<i>03</i></button>
+      <button data-f="music">音楽<i>02</i></button>
+      <button data-f="text">文章・物販<i>03</i></button>
+    </div>
+
+    <div class="wx">
+      <!-- 01 -->
+      <article class="wk on" data-c="build" data-r>
+        <button class="wk-hd" aria-expanded="true"><span class="wk-n">01</span><span class="wk-t">製造業BtoB ランディングページ</span><span class="wk-k">Landing Page</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Metal<em>Works</em></div><div class="tp-b">Figma / 11 sections</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自主制作の作例（架空の企業）</span>
+            <p>金属加工メーカーが新規の取引先を獲得するためのLP。ファーストビューから問い合わせ導線まで11セクションを設計しました。技術力を「高品質」といった形容詞ではなく、公差・材質・納期という数値で示す構成にしています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>構成設計・コピー・デザイン</dd></div>
+              <div><dt>制作物</dt><dd>PC版 11セクション（全10,615px）</dd></div>
+              <div><dt>ツール</dt><dd>Figma（日本語レイヤー命名・オートレイアウト）</dd></div>
+              <div><dt>納品形式</dt><dd>編集可能なFigmaデータ</dd></div>
+            </dl>
+            <a class="wk-go" href="https://www.figma.com/design/xWoVlQWvA3anAe7vVdzF4W" target="_blank" rel="noopener">Figmaで実物を見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 02 -->
+      <article class="wk" data-c="build" data-r style="--d:.04s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">02</span><span class="wk-t">健康食品 広告バナー</span><span class="wk-k">Ad Creative</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v fit"><img src="supplement-banner.jpg" alt="健康食品の広告バナー作例" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">自主制作の作例（架空の商品）</span>
+            <p>SNS広告用のバナー作例。商品の説明から入らず、読み手が自分の生活の中で心当たりのある状態から書き出す構成にしています。写真・コピー・レイアウトをまとめて設計し、配信面に合わせて比率違いまで展開できる形で作りました。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>コピー・画像生成・レイアウト・仕上げ</dd></div>
+              <div><dt>展開</dt><dd>1:1 ／ 4:5 ／ 9:16 の比率違いに対応</dd></div>
+              <div><dt>用途</dt><dd>Meta広告・A/Bテスト用の差分制作</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 03 -->
+      <article class="wk" data-c="build" data-r style="--d:.08s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">03</span><span class="wk-t">jbrain.space｜スタジオ公式サイト</span><span class="wk-k">Website</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><img src="jbrain-shot.jpg" alt="jbrain.space のトップページ" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">自社サイト（設計から運用まで）</span>
+            <p>自分のスタジオの公式サイト。企画、構成、デザイン、実装、公開後の更新まですべて自分で行っています。黒地に明朝でトーンを作り、写真ではなく文字で信頼感を出す方向に振りました。WordPressで運用しています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>企画・デザイン・実装・運用</dd></div>
+              <div><dt>技術</dt><dd>WordPress（REST API経由での更新も実装）</dd></div>
+              <div><dt>状態</dt><dd>公開中・運用継続</dd></div>
+            </dl>
+            <a class="wk-go" href="https://jbrain.space/" target="_blank" rel="noopener">サイトを見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 04 -->
+      <article class="wk" data-c="build" data-r style="--d:.12s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">04</span><span class="wk-t">JobLists｜フォーム営業支援ツール</span><span class="wk-k">Tool Development</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Job<em>Lists</em></div><div class="tp-b">Windows / 製品化まで完了</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自社製品（企画・開発・配布まで）</span>
+            <p>企業の問い合わせフォームへの営業を効率化するWindowsアプリ。企業リストの収集から送信、結果の記録までを一本化しました。自分で使うために作ったものを、配布できる製品の形（インストーラ・手順書つき）まで仕上げています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>企画・設計・開発・配布物の整備</dd></div>
+              <div><dt>形態</dt><dd>Windows実行ファイル＋セットアップ手順書</dd></div>
+              <div><dt>技術</dt><dd>Python／ブラウザ自動操作／送信ログ管理</dd></div>
+              <div><dt>状態</dt><dd>製品化・実運用まで完了</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 05 -->
+      <article class="wk" data-c="build" data-r style="--d:.16s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">05</span><span class="wk-t">TaskFlow｜関係性が見えるタスク管理</span><span class="wk-k">Application</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Task<em>Flow</em></div><div class="tp-b">Kanban / Knowledge / Relations</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自社開発</span>
+            <p>カンバン型のタスク管理に、社内のナレッジと顧客との関係性を結びつけて可視化するアプリ。「このタスクはどの顧客の、どの経緯から来ているのか」が一目で追えます。担当者の頭の中にしかない繋がりを、画面の上に出すことを目的に作りました。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>企画・設計・開発</dd></div>
+              <div><dt>機能</dt><dd>カンバン管理／ナレッジ蓄積／顧客との関係性の可視化</dd></div>
+              <div><dt>着想</dt><dd>Trello型の運用で抜け落ちる「文脈」を残す</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 06 -->
+      <article class="wk" data-c="build" data-r style="--d:.2s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">06</span><span class="wk-t">AI自動投稿基盤｜GitHub Actions × 生成AI</span><span class="wk-k">Automation</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Daily<em>Pipeline</em></div><div class="tp-b">サーバー費用ゼロ / 無人運用</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自社運用（サーバー費用ゼロ）</span>
+            <p>複数アカウントのSNS投稿を、決まった時刻に自動で生成・投稿する仕組み。常時稼働のサーバーを持たず、無料枠の中で毎日動かしていました。投稿前に内容を検査するゲートを挟み、規約違反や文字数超過を機械的に止める設計です。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>設計・実装・運用</dd></div>
+              <div><dt>技術</dt><dd>GitHub Actions／Python／生成AI API</dd></div>
+              <div><dt>特徴</dt><dd>投稿前の自動チェック・失敗時のみ通知</dd></div>
+              <div><dt>状態</dt><dd>構築・無人運用まで完了（現在は稼働を停止）</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 07 -->
+      <article class="wk" data-c="ai" data-r style="--d:.24s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">07</span><span class="wk-t">AIキャラクター5体の企画・運用</span><span class="wk-k">AI Direction</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><img src="characters-sheet.jpg" alt="制作したAIキャラクター5体のビジュアル" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">自社プロジェクト</span>
+            <p>2Dアニメ調から実写調、メカまで、絵柄のまったく違う5体をゼロから設計しました。顔と世界観がブレないようリファレンスを固定し、撮影・モデル・スタジオを使わずにビジュアルを作り続ける方法を、ここで組み立てています。各プラットフォームの規定に沿って、AI生成であることを明示したうえで運用してきました。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>キャラクター設計・アートディレクション・画像生成・文章・運用設計</dd></div>
+              <div><dt>構成</dt><dd>黒崎いろは／椎名しずく／東雲哀／月島宗介／逢坂千秋</dd></div>
+              <div><dt>要点</dt><dd>絵柄の作り分け／同一人物に見せる顔の固定／AI明示の運用</dd></div>
+              <div><dt>状態</dt><dd>制作・運用の実績（現在は新規制作を停止）</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 08 -->
+      <article class="wk" data-c="ai" data-r style="--d:.28s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">08</span><span class="wk-t">画像生成の内製環境｜追加学習まで自前で</span><span class="wk-k">AI Pipeline</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">In-house<em>Pipeline</em></div><div class="tp-b">ComfyUI / SDXL / LoRA</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自社構築</span>
+            <p>画像生成の環境を自分のPCに構築し、モデルの追加学習（LoRA）まで自分で回しています。1枚ごとの費用がかからないので、納得がいくまで枚数を出して選べます。クラウドのAPIに素材を預けなくて済むぶん、機密のあるお仕事にも持ち込みやすい構成です。</p>
+            <dl class="wk-dl">
+              <div><dt>構成</dt><dd>ComfyUI／SDXL／ControlNet／LoRA追加学習</dd></div>
+              <div><dt>用途</dt><dd>人物の顔の固定／画風の統一／バナー素材の量産</dd></div>
+              <div><dt>利点</dt><dd>枚数を出しても費用が増えない・素材を外に出さない</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 09 -->
+      <article class="wk" data-c="ai" data-r style="--d:.32s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">09</span><span class="wk-t">動画・Reels 制作</span><span class="wk-k">Video / Short-form</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Short<em>Form</em></div><div class="tp-b">静止画 → 動き → 音・字幕</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自社制作</span>
+            <p>静止画を起点に動きをつけ、音と字幕まで載せる縦型動画の制作。ゼロから動画を生成するのではなく、まずビジュアルを固めてから動かす順番にしているので、伝えたい絵から離れません。字幕やモーショングラフィックはHTMLから組み立てています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>構成・素材制作・編集・字幕</dd></div>
+              <div><dt>形式</dt><dd>Reels／Shorts／TikTok の縦型</dd></div>
+              <div><dt>要点</dt><dd>絵を先に固定してから動かす</dd></div>
+            </dl>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 10 -->
+      <article class="wk" data-c="music" data-r style="--d:.36s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">10</span><span class="wk-t">TRINITAS｜和楽器の楽曲名義</span><span class="wk-k">Music / Worldwide</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">TRINI<em>TAS</em></div><div class="tp-b">三味線・和太鼓 / 世界配信</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自主レーベル（企画から配信まで）</span>
+            <p>三味線と和太鼓を必ず入れる、という縛りを置いた和風の楽曲名義。作詞、スタイル設計、ジャケット、配信文までを一貫して作っています。デビュー曲「華」はDistroKid経由で各ストリーミングサービスへ世界配信しました。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>コンセプト・作詞・スタイル設計・ジャケット・配信</dd></div>
+              <div><dt>配信</dt><dd>DistroKid経由で各DSPへ</dd></div>
+              <div><dt>特徴</dt><dd>和楽器を外さない、という制作ルールを先に決める</dd></div>
+            </dl>
+            <a class="wk-go" href="https://distrokid.com/hyperfollow/trinitas1/meguri" target="_blank" rel="noopener">配信ページを見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 11 -->
+      <article class="wk" data-c="music" data-r style="--d:.4s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">11</span><span class="wk-t">Tangent・ケムルミヤコ｜YouTube楽曲名義</span><span class="wk-k">Music / Short-form</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><img src="tangent-image.jpg" alt="Tangent の楽曲ビジュアル" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">自主制作（音・映像・解析まで）</span>
+            <p>楽曲とビジュアライザー動画をセットで作り、ショート動画として展開している名義。公開後の再生データを集計する仕組みも自分で組み、どの尺・どの入り方が伸びたのかを毎週見ています。「作る」と「効果を見る」が同じ人間の中にある状態です。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>作詞・楽曲設計・ビジュアライザー制作・解析</dd></div>
+              <div><dt>技術</dt><dd>HTMLベースの動画生成／YouTube Data APIでの自動集計</dd></div>
+              <div><dt>要点</dt><dd>24時間の初速で正規化して評価する</dd></div>
+            </dl>
+            <a class="wk-go" href="https://www.youtube.com/@Tangent_com/shorts" target="_blank" rel="noopener">YouTubeを見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 12 -->
+      <article class="wk" data-c="text" data-r style="--d:.44s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">12</span><span class="wk-t">鏑木一茶｜Kindle出版</span><span class="wk-k">Publishing</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v fit"><img src="kindle-image.png" alt="Kindle出版の書影" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">筆名での出版（人間が執筆）</span>
+            <p>「鏑木一茶」は、じゅまる本人の筆名です。企画、執筆、構成、表紙、出版手続きまでを一人で行っています。読み手が途中で降りない順番の作り方は、ここで身につけました。LPの構成やライティングの土台になっています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>企画・執筆・構成・表紙・出版</dd></div>
+              <div><dt>形態</dt><dd>Amazon Kindle</dd></div>
+              <div><dt>補足</dt><dd>同名のSNSアカウントはAIキャラクターとして、AI明示のうえ別に運用していました</dd></div>
+            </dl>
+            <a class="wk-go" href="https://www.amazon.co.jp/stores/author/B0G1HSNTYH" target="_blank" rel="noopener">著者ページを見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 13 -->
+      <article class="wk" data-c="text" data-r style="--d:.48s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">13</span><span class="wk-t">note連載・YouTube台本</span><span class="wk-k">Writing</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><div class="tp"><div class="tp-en">Written<em>Records</em></div><div class="tp-b">note 連載 / YouTube 台本</div></div></div>
+          <div class="wk-c">
+            <span class="wk-note">自主制作・受託の両方</span>
+            <p>AIを使った制作と自動化の実装記録を、詰まったところまで含めて書き残している連載。うまくいった話だけを書かない方針にしています。あわせて、YouTubeの長編台本も制作しています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>企画・執筆・編集</dd></div>
+              <div><dt>媒体</dt><dd>note（連載）／YouTube台本</dd></div>
+              <div><dt>方針</dt><dd>成功例だけを書かない・実装の出所を残す</dd></div>
+            </dl>
+            <a class="wk-go" href="https://note.com/jyumarucom" target="_blank" rel="noopener">note（JYUMARU） ↗</a>
+            <a class="wk-go" href="https://note.com/rayphone" target="_blank" rel="noopener">note（RayPhone AI） ↗</a>
+          </div>
+        </div></div></div>
+      </article>
+
+      <!-- 14 -->
+      <article class="wk" data-c="text" data-r style="--d:.52s">
+        <button class="wk-hd" aria-expanded="false"><span class="wk-n">14</span><span class="wk-t">Redbubble｜浮世絵デザインの物販</span><span class="wk-k">Product Design</span><span class="wk-x" aria-hidden="true"></span></button>
+        <div class="wk-bd"><div class="wk-ov"><div class="wk-in">
+          <div class="wk-v"><img src="redbubble-image.jpg" alt="浮世絵デザインのプロダクト" loading="lazy"></div>
+          <div class="wk-c">
+            <span class="wk-note">自社ショップ（デザインから出品まで）</span>
+            <p>浮世絵の構図と色使いを軸にしたデザインを、Tシャツ・ステッカー・ポスターなどに展開して販売しています。1枚の絵を、商品ごとに違う縦横比と印刷面へ落とし込む作業まで自分で行っています。</p>
+            <dl class="wk-dl">
+              <div><dt>担当</dt><dd>デザイン・商品展開・出品・運用</dd></div>
+              <div><dt>展開</dt><dd>アパレル／ステッカー／ポスター ほか</dd></div>
+              <div><dt>要点</dt><dd>1つの絵柄を、商品ごとの比率と印刷面へ落とし込む</dd></div>
+            </dl>
+            <a class="wk-go" href="https://www.redbubble.com/people/jyumaru/shop" target="_blank" rel="noopener">ショップを見る ↗</a>
+          </div>
+        </div></div></div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- Links -->
-<section id="links">
-  <div class="reveal"><div class="section-label">Connect</div></div>
-  <div class="reveal reveal-delay-1"><h2 class="section-title">各プラットフォームで<br><em>発信中。</em></h2></div>
-  <div class="links-grid">
-    <a href="https://www.instagram.com/iroha.kurosaki/" class="link-card reveal reveal-delay-1" target="_blank">
-      <div class="link-icon">✦</div>
-      <div class="link-platform">Instagram</div>
-      <div class="link-name">AIキャラ<br>各アカウント</div>
-      <div class="link-desc">黒崎いろは・椎名しずく・月島宗介・東雲哀・逢坂千秋のAIキャラクター発信拠点</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://x.com/jyumarucom" class="link-card reveal reveal-delay-2" target="_blank">
-      <div class="link-icon">✕</div>
-      <div class="link-platform">X (Twitter)</div>
-      <div class="link-name">祠堂じゅまる<br>／ 鏑木一茶</div>
-      <div class="link-desc">スタジオの視点と、AIキャラ鏑木一茶・RayPhoneAIの自動投稿運用</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://note.com/jyumarucom" class="link-card reveal reveal-delay-3" target="_blank">
-      <div class="link-icon">◈</div>
-      <div class="link-platform">note.com</div>
-      <div class="link-name">祠堂<br>じゅまる</div>
-      <div class="link-desc">AIキャラ制作・自動化の実装ノウハウと制作の裏側を綴るnote</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://note.com/rayphone" class="link-card reveal reveal-delay-4" target="_blank">
-      <div class="link-icon">◇</div>
-      <div class="link-platform">note.com</div>
-      <div class="link-name">RayPhone<br>AI</div>
-      <div class="link-desc">「AIの私が、実際にやって・しくじった記録」。AIの"使い方"を実体験ベースで</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://www.youtube.com/@Tangent_com/shorts" class="link-card reveal reveal-delay-1" target="_blank">
-      <div class="link-icon">▷</div>
-      <div class="link-platform">YouTube / TikTok</div>
-      <div class="link-name">Tangent<br>Music</div>
-      <div class="link-desc">AI生成楽曲を毎日ショート動画で展開する音楽プロジェクト</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://stand.fm/channels/6a516f768a6172d42da7262f" class="link-card reveal reveal-delay-2" target="_blank">
-      <div class="link-icon">◍</div>
-      <div class="link-platform">stand.fm</div>
-      <div class="link-name">逢坂千秋<br>名残帖（声）</div>
-      <div class="link-desc">逢坂千秋の専用AI音声による朗読。言葉と声で"名残"を留める</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://distrokid.com/hyperfollow/trinitas1/meguri" class="link-card reveal reveal-delay-3" target="_blank">
-      <div class="link-icon">♫</div>
-      <div class="link-platform">Spotify / DSP</div>
-      <div class="link-name">TRINITAS<br>／ 小夜</div>
-      <div class="link-desc">和風ユニットTRINITAS・小夜（Sayo）の楽曲を各ストリーミングで配信</div>
-      <div class="link-arrow">↗</div>
-    </a>
-    <a href="https://www.redbubble.com/people/jyumaru/shop" class="link-card reveal reveal-delay-4" target="_blank">
-      <div class="link-icon">◆</div>
-      <div class="link-platform">Redbubble</div>
-      <div class="link-name">JYUMARU<br>Goods</div>
-      <div class="link-desc">浮世絵・和モチーフのアートをプリントオンデマンドで展開する物販</div>
-      <div class="link-arrow">↗</div>
-    </a>
+<!-- ══ FLOW ══════════════════════════════════════════ -->
+<section id="flow" class="pad" style="scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">04 — Flow</span><em class="en">How we work</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">完成してから、見せません。</h2>
+      <p class="sh-p" data-r style="--d:.16s">手戻りが出るのは、最後にまとめて見せるからです。小さく出して、方向を確かめながら進めます。</p>
+    </div>
+    <ol class="tl">
+      <li class="done" data-r><div class="tl-n">01</div><h3>お話を伺う</h3><span class="dur">30–60 min</span><p>やりたいことを伺って、その場で要件を整理してお返しします。「つまり、こういうことですよね」まで詰めます。</p></li>
+      <li class="done" data-r style="--d:.08s"><div class="tl-n">02</div><h3>小さく作って見せる</h3><span class="dur">a few days</span><p>いきなり完成品を目指しません。方向性が分かる最小限のものをお見せして、認識を合わせます。</p></li>
+      <li data-r style="--d:.16s"><div class="tl-n">03</div><h3>作り込む</h3><span class="dur">by project</span><p>方向が固まってから細部に入ります。途中経過も随時お見せするので、途中でも軌道修正できます。</p></li>
+      <li data-r style="--d:.24s"><div class="tl-n">04</div><h3>納品、そのあと</h3><span class="dur">continuing</span><p>編集できるデータでお渡しします。公開後の修正や追加も、同じ窓口で承ります。</p></li>
+    </ol>
   </div>
 </section>
 
-<!-- Contact -->
-<section id="contact">
-  <div class="contact-inner">
-    <div class="reveal"><span class="contact-label">Contact ／ Work with us</span></div>
-    <div class="reveal reveal-delay-1">
-      <h2 class="contact-title">まずは、<br><em>ご相談から。</em></h2>
-      <p class="contact-sub">制作代行・運用代行・コンサル。フェーズを問わず、無料でご相談を承っています。</p>
-      <div class="contact-ctas">
-        <a href="https://jbrain.space/" target="_blank" class="primary">制作代行を相談</a>
-        <a href="https://jbrain.space/" target="_blank">運用代行を相談</a>
-        <a href="https://jbrain.space/" target="_blank">コンサルを相談</a>
+<!-- ══ ABOUT ═════════════════════════════════════════ -->
+<section id="about" class="pad ink" data-ink style="scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">05 — About</span><em class="en">Who's behind this</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">誰が作っているか。</h2>
+      <p class="sh-p" data-r style="--d:.16s">神奈川で、ひとりでやっています。窓口から制作まで、最後まで同じ人間が担当します。</p>
+    </div>
+    <div class="ab">
+      <div class="ab-v" data-r><img src="about-image.png" alt="JYUMARU のアートイメージ" loading="lazy"></div>
+      <div class="ab-t" data-r style="--d:.1s">
+        <b>祠堂じゅまる（JYUMARU）</b>
+        <p>本業はメーカーでの商品開発です。図面と公差と納期のある現場で長く仕事をしてきたので、製造業のサイトは「見た目をきれいにする」だけでなく、中身のほうから書けます。何を数値で見せれば信用されるのかが、体感で分かります。</p>
+        <p>Webとツールは独学です。作りながら覚えて、作ったものを公開して、動かなかったところを直す——という順番で身につけました。だから、机上の設計より先に「動くところ」まで持っていくのが速いです。このサイトに並んでいるものは、全部その順番で作りました。</p>
+        <p>受けているのは、Web制作、広告バナー、業務ツールの開発、AIを使ったビジュアル制作、そしてライティングです。分野が広いのは器用貧乏だからではなく、「作りたいものを作るのに必要だったから、順に覚えた」という理由です。おかげで、ひとつの案件を分業せずに最後まで通せます。</p>
+        <ul class="ab-s">
+          <li><b>14</b><span>公開している制作物</span></li>
+          <li><b>5</b><span>設計したAIキャラクター</span></li>
+          <li><b>6</b><span>立ち上げた音楽名義</span></li>
+          <li><b>1</b><span>窓口から制作まで、同じ人間</span></li>
+        </ul>
       </div>
-      <p class="contact-jbrain">詳しい会社情報・お問い合わせは <a href="https://jbrain.space/" target="_blank">jbrain.space</a> へ。</p>
-      <a href="mailto:jyumaru.shidou@gmail.com" class="contact-email">jyumaru.shidou@gmail.com</a>
+    </div>
+
+    <div class="prf">
+      <div data-r><em class="en">Ran it myself</em><b>自分の案件で回してきた。</b><p>生成AIを使った制作と自動投稿を、自分のプロジェクトで実際に運用してきました。「試してみた」ではなく、壊れたら自分が困る状態で回していたので、どこが危ないかを体で知っています。</p></div>
+      <div data-r style="--d:.08s"><em class="en">In-house</em><b>画像生成は内製。</b><p>画像生成の環境を自分のPCに構築し、モデルの追加学習まで行っています。1枚ごとの費用がかからないので、納得がいくまで枚数を出して選べます。素材を外に出さずに済むのも利点です。</p></div>
+      <div data-r style="--d:.16s"><em class="en">After launch</em><b>作って終わりにしない。</b><p>公開したあとの反応を集計する仕組みも自分で組んでいます。「作る人」と「効果を見る人」が分かれていないぶん、次の一手が早くなります。</p></div>
+    </div>
+
+    <div class="disc" data-r>
+      <div><span class="lb">Disclosure</span><h3>AIの使い方は、<br>最初にお伝えしています。</h3></div>
+      <div>
+        <p>設計とたたき台の作成に生成AIを活用し、判断と仕上げは私が行っています。速度を出すための道具として使っているもので、隠す性質のものではないと考えているため、ご依頼の前にお伝えしています。どの工程でどう使うかは、ご要望があれば事前にご説明します。</p>
+        <p>また、私が制作・運営してきたAIキャラクターのアカウントは、すべて各プラットフォームの規定に沿って、AI生成であることを明示したうえで運用しています。ご依頼いただいた制作物についても、AIの利用を伏せるような使い方はいたしません。</p>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="footer-copy">© 2026 祠堂じゅまる / JYUMARU. All rights reserved.</div>
-  <a href="https://jbrain.space/" target="_blank" style="font-size:11px;letter-spacing:0.14em;color:rgba(250,249,246,.5);text-decoration:none;">JYUMARU 公式サイト ↗</a>
-  <div class="footer-logo">祠堂じゅまる</div>
-</footer>
+<!-- ══ FAQ ═══════════════════════════════════════════ -->
+<section id="faq" class="pad" style="background:var(--paper-2);scroll-margin-top:66px">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-l" data-r><span class="lb">06 — FAQ</span><em class="en">Questions</em></div>
+      <h2 class="sh-h disp" data-r style="--d:.08s">よくいただく<br>ご質問。</h2>
+    </div>
+    <div class="qa">
+      <div class="qi" data-r>
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>まだ何を作りたいか固まっていないのですが、相談できますか？</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>その段階のご相談がいちばん歓迎です。「こういう困りごとがある」というお話から、何を作るのが早いかをご一緒に決めるところから始めます。要件を整理してお返しするのが得意です。</p></div></div></div>
+      </div>
+      <div class="qi" data-r style="--d:.04s">
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>納品形式は選べますか？</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>デザインはFigmaでお渡しします。レイヤー名を日本語で整理し、文字量が変わっても崩れない組み方にしてあるので、御社側での差し替えも、コーディング担当の方への引き渡しもそのままできます。HTMLでの実装までご希望の場合も対応します。</p></div></div></div>
+      </div>
+      <div class="qi" data-r style="--d:.08s">
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>対応できる時間帯を教えてください。</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>平日は早朝5〜7時と20時以降、土日は日中から柔軟に動けます。週15〜25時間を安定して確保しています。日中もメッセージは確認していますので、ご連絡には当日〜翌営業日にお返しします。</p></div></div></div>
+      </div>
+      <div class="qi" data-r style="--d:.12s">
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>制作にAIを使っていますか？</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>使っています。設計とたたき台の作成に活用し、判断と仕上げは私が行います。隠す性質のものではないと考えているので、最初にお伝えしています。ご懸念がある場合は、どの工程でどう使うかを事前にご説明します。人物ビジュアルなど、AI生成であることの開示が必要な用途では、その運用設計までご一緒します。</p></div></div></div>
+      </div>
+      <div class="qi" data-r style="--d:.16s">
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>秘密保持契約（NDA）は結べますか？</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>はい。ご相談の段階でも締結できます。御社のひな形をお送りいただければ、そちらで対応いたします。実績としての掲載も、ご許可をいただいたもの以外は行いません。画像生成は自分のPCの中で完結する環境も持っているので、素材を外部サービスに預けたくない場合はそちらで進められます。</p></div></div></div>
+      </div>
+      <div class="qi" data-r style="--d:.2s">
+        <button class="qh" aria-expanded="false"><span class="qm">Q</span><h3>小さい依頼でもお願いできますか？</h3><span class="qx" aria-hidden="true"></span></button>
+        <div class="qb"><div><div class="qin"><span class="qm">A</span><p>もちろんです。バナー1枚、ページの一部修正、Excelの作業を自動化したい、といったご相談も承っています。まず小さくお試しいただくところから始めていただければと思います。</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ═══════════════════════════════════════ -->
+<div class="cta" data-ink>
+  <div class="wrap">
+    <span class="lb" data-r>Contact</span>
+    <h2 data-r style="--d:.06s">まず、困っていることを<br>聞かせてください。</h2>
+    <p class="lead" data-r style="--d:.14s">仕様書は要りません。「こういうことがしたい」の一行から始められます。初回のご相談は無料です。お話を伺ったうえで、何を、どう作るのがいいかをご提案します。</p>
+    <div class="hero-a" data-r style="--d:.2s">
+      <a href="https://jbrain.space/" target="_blank" rel="noopener" class="act act-p"><span>制作を相談する</span><small>reply within 1 business day</small></a>
+      <a href="#works" class="act"><span>作例をもう一度見る</span><small>fourteen projects</small></a>
+    </div>
+    <p class="cta-n" data-r style="--d:.26s">クラウドワークス経由でのご依頼にも対応しています。</p>
+
+    <div class="links" data-r>
+      <a href="https://jbrain.space/" target="_blank" rel="noopener"><em>Official</em><b>jbrain.space</b><span>スタジオの公式サイト</span></a>
+      <a href="https://note.com/jyumarucom" target="_blank" rel="noopener"><em>note</em><b>JYUMARU</b><span>制作と自動化の実装記録</span></a>
+      <a href="https://www.youtube.com/@Tangent_com/shorts" target="_blank" rel="noopener"><em>YouTube</em><b>Tangent</b><span>楽曲とビジュアライザー</span></a>
+      <a href="https://www.redbubble.com/people/jyumaru/shop" target="_blank" rel="noopener"><em>Shop</em><b>Redbubble</b><span>浮世絵デザインの物販</span></a>
+    </div>
+
+    <footer>
+      <div class="ft-l">
+        <svg class="seal" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+        <b>JYUMARU</b>
+        <p>塩島 努（屋号：JYUMARU）<br>神奈川エリア／オンラインで全国対応</p>
+      </div>
+      <div class="ft-r">
+        <span>© 2026 JYUMARU</span>
+        <a href="https://jbrain.space/" target="_blank" rel="noopener">公式サイト ↗</a>
+      </div>
+    </footer>
+  </div>
+</div>
 
 <script>
-  // カーソル
-  const dot=document.getElementById('dot'), ring=document.getElementById('ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX; my=e.clientY;
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-    // ダーク領域判定
-    const el = document.elementFromPoint(mx, my);
-    const dark = el && el.closest('#contact, footer');
-    document.body.classList.toggle('cursor-invert', !!dark);
-  });
-  (function loop(){
-    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a,button,.work-card,.skill-card,.link-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-  });
+(function(){
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Nav scroll
-  window.addEventListener('scroll',()=>{
-    document.getElementById('nav').classList.toggle('scrolled',scrollY>60);
-  });
+  /* 帯を複製してシームレスに流す */
+  var mq = document.getElementById('mq');
+  if(mq) mq.appendChild(mq.firstElementChild.cloneNode(true));
 
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  /* 出現 */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.1, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('[data-r]').forEach(function(el){ io.observe(el); });
 
-  // Counter
-  const cobs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
+  /* 進行バー */
+  var prog = document.getElementById('prog');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.transform = 'scaleX(' + (h>0 ? Math.min(window.scrollY/h,1) : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* 左レール */
+  var rail = document.querySelectorAll('#rail a');
+  var io2 = new IntersectionObserver(function(es){
+    es.forEach(function(e){
       if(!e.isIntersecting) return;
-      const el=e.target, tgt=+el.dataset.target;
-      let n=0; const step=tgt/60;
-      const iv=setInterval(()=>{
-        n=Math.min(n+step,tgt);
-        el.textContent=Math.floor(n);
-        if(n>=tgt){el.textContent=tgt;clearInterval(iv);}
-      },16);
-      cobs.unobserve(el);
+      rail.forEach(function(a){ a.classList.toggle('on', a.dataset.s === e.target.id); });
     });
-  },{threshold:.5});
-  document.querySelectorAll('.counter').forEach(el=>cobs.observe(el));
+  },{rootMargin:'-45% 0px -45% 0px'});
+  rail.forEach(function(a){ var s=document.getElementById(a.dataset.s); if(s) io2.observe(s); });
 
-  // Filter
-  document.querySelectorAll('.filter-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      document.querySelectorAll('.works-grid .work-card').forEach(card=>{
-        const show = (f==='all') || card.dataset.cat===f;
-        card.style.display = show ? '' : 'none';
+  /* 墨地では色を反転 */
+  var io3 = new IntersectionObserver(function(es){
+    es.forEach(function(e){ e.target.classList.toggle('ink-vis', e.isIntersecting); });
+    document.body.classList.toggle('on-ink', !!document.querySelector('[data-ink].ink-vis'));
+  },{rootMargin:'-50% 0px -50% 0px'});
+  document.querySelectorAll('[data-ink]').forEach(function(s){ io3.observe(s); });
+
+  /* 開閉 */
+  function toggle(btn, item, siblings){
+    var open = item.classList.contains('on');
+    if(siblings) siblings.forEach(function(s){ if(s!==item){ s.classList.remove('on'); s.querySelector('button').setAttribute('aria-expanded','false'); } });
+    item.classList.toggle('on', !open);
+    btn.setAttribute('aria-expanded', String(!open));
+  }
+  var wks = Array.prototype.slice.call(document.querySelectorAll('.wk'));
+  wks.forEach(function(w){ w.querySelector('.wk-hd').addEventListener('click', function(){ toggle(this, w, wks); }); });
+  document.querySelectorAll('.qi').forEach(function(q){ q.querySelector('.qh').addEventListener('click', function(){ toggle(this, q, null); }); });
+
+  /* 作例の絞り込み */
+  document.querySelectorAll('.filt button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f;
+      document.querySelectorAll('.filt button').forEach(function(o){ o.classList.toggle('on', o===b); });
+      var first = null;
+      wks.forEach(function(w){
+        var show = (f==='all' || w.dataset.c===f);
+        w.hidden = !show;
+        w.classList.remove('on');
+        w.querySelector('button').setAttribute('aria-expanded','false');
+        if(show && !first) first = w;
       });
+      if(first){ first.classList.add('on'); first.querySelector('button').setAttribute('aria-expanded','true'); }
     });
   });
 
-  // Magnetic buttons
-  document.querySelectorAll('.btn-primary,.btn-outline').forEach(btn=>{
-    btn.addEventListener('mousemove',e=>{
-      const r=btn.getBoundingClientRect();
-      btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.25}px)`;
+  /* カーソル */
+  if(!rm && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    var cur = document.getElementById('cur'), x=0,y=0,cx=0,cy=0;
+    window.addEventListener('mousemove', function(e){ x=e.clientX; y=e.clientY; });
+    (function loop(){ cx+=(x-cx)*.18; cy+=(y-cy)*.18; cur.style.transform='translate('+cx+'px,'+cy+'px)'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.body.classList.add('hov'); });
+      el.addEventListener('mouseleave', function(){ document.body.classList.remove('hov'); });
     });
-    btn.addEventListener('mouseleave',()=>btn.style.transform='');
-  });
+  }
+})();
 </script>
 </body>
 </html>
