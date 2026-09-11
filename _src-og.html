@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<!-- OGPカード(og.jpg)の生成元。1200x630で撮って等倍に落とす。手順は末尾コメント。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0f1116;
+  --gold:#a0783a; --gold-l:#c9a464;
+  --w:#f2efe9; --w-m:rgba(242,239,233,.60); --w-f:rgba(242,239,233,.38);
+  --rl2:rgba(242,239,233,.07);
+  --disp:"Cormorant Garamond","Zen Old Mincho","Yu Mincho",YuMincho,"Hiragino Mincho ProN",serif;
+  --ui:"Outfit",system-ui,sans-serif;
+  --gut:74px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:var(--ink);color:var(--w);font-family:var(--ui);position:relative;
+     -webkit-font-smoothing:antialiased}
+
+/* 6列の罫線グリッド（ヒーローと同じ） */
+.g{position:absolute;inset:0;padding:0 var(--gut);display:grid;grid-template-columns:repeat(6,1fr);opacity:.6}
+.g i{border-left:1px solid var(--rl2)}
+.g i:first-child{border-left:0}
+
+/* 落款（巨大・極薄） */
+.seal{display:block;width:1em;height:1em;flex:none}
+.seal circle,.seal path{fill:none;stroke:currentColor;stroke-width:1.05;vector-effect:non-scaling-stroke}
+.big{position:absolute;right:-96px;bottom:-150px;font-size:600px;color:var(--gold);opacity:.085;z-index:1}
+
+.in{position:relative;z-index:2;height:100%;padding:var(--gut);display:flex;flex-direction:column}
+
+/* ワードマーク */
+.m{display:flex;align-items:center;gap:11px}
+.m .seal{font-size:19px;color:var(--gold-l)}
+.m b{font-family:var(--disp);font-size:18px;font-weight:500;letter-spacing:.2em;line-height:1}
+
+.mid{margin-top:auto}
+.lb{font-size:10.5px;font-weight:500;letter-spacing:.1em;color:var(--gold-l);display:flex;align-items:center;gap:11px}
+.lb::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7}
+.en{font-family:var(--disp);font-style:italic;font-weight:300;letter-spacing:.03em;
+    color:var(--w-f);font-size:19px;line-height:1.5;margin-top:13px}
+h1{font-family:var(--disp);font-weight:700;font-size:70px;line-height:1.26;letter-spacing:-.005em;
+   margin-top:26px;font-feature-settings:"palt" 1;word-break:auto-phrase}
+h1 .q{color:var(--gold-l)}
+h1>span{display:block}
+.sub{margin-top:26px;max-width:700px;font-size:16.5px;line-height:1.85;color:var(--w-m);letter-spacing:.02em;word-break:auto-phrase}
+
+/* 下段：扱う領域 */
+.ft{margin-top:auto;padding-top:22px;border-top:1px solid var(--rl2);
+    display:flex;align-items:center;gap:15px;flex-wrap:nowrap}
+.ft span{font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--w-m);white-space:nowrap}
+.ft .seal{font-size:8px;color:var(--gold);opacity:.85}
+</style>
+</head>
+<body>
+<div class="g"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<svg class="seal big" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+
+<div class="in">
+  <div class="m">
+    <svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+    <b>JYUMARU</b>
+  </div>
+
+  <div class="mid">
+    <div class="lb">祠堂じゅまる（JYUMARU）／神奈川・オンラインで全国対応</div>
+    <div class="en">Web &nbsp;·&nbsp; Tool &nbsp;·&nbsp; AI &nbsp;·&nbsp; Music</div>
+    <h1><span><span class="q">「</span>こういうの作れる？<span class="q">」</span></span><span>から、始められます。</span></h1>
+    <p class="sub">Webサイト・LP、広告バナー、社内で使う業務ツール、生成AIを使ったビジュアル制作。仕様書はなくて構いません。まず小さく形にしてお見せします。</p>
+  </div>
+
+  <div class="ft">
+    <span>Landing Page</span>
+    <svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+    <span>Website</span>
+    <svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+    <span>Ad Creative</span>
+    <svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+    <span>Tool Development</span>
+    <svg class="seal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M12 4.2V19.8M4.2 12H19.8"/></svg>
+    <span>AI Direction</span>
+  </div>
+</div>
+</body>
+</html>
+<!--
+  再生成手順:
+    msedge --headless=new --disable-gpu --hide-scrollbars       --user-data-dir=<temp> --force-device-scale-factor=2       --window-size=1200,630 --virtual-time-budget=10000       --screenshot=og-2x.png file:///<このファイル>
+    PIL: Image.open('og-2x.png').convert('RGB').resize((1200,630),LANCZOS).save('og.jpg',quality=92,subsampling=0)
+  ※Google Fontsを読むのでオフラインだと和文が別書体になる。
+-->
